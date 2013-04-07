@@ -7,10 +7,22 @@
 //
 
 #import "BTTask.h"
+#import "BTThreadPool.h"
+
+static NSInteger taskIDSeed = 0;
 
 @implementation BTTask
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    _taskID = taskIDSeed++;
+  }
+  return self;
+}
 - (void)cancel {
   _canceled = YES;
+  [_threadPool cancelTask:self];
 }
 
 - (BOOL)isCanceled {
@@ -18,7 +30,15 @@
 }
 
 - (void)run {
-  [NSThread sleepForTimeInterval:0.2];
+  [NSThread sleepForTimeInterval:1.2];
+}
+
+- (NSInteger) taskID {
+  return _taskID;
+}
+
+- (BTThreadPool *) threadPool {
+  return _threadPool;
 }
 
 @end

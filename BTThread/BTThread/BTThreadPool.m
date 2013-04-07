@@ -8,6 +8,22 @@
 
 #import "BTThreadPool.h"
 
+
+@interface BTTask(BTThreadPool)
+
+- (void)setThreadPool:(BTThreadPool*)threadPool;
+
+@end
+
+
+@implementation BTTask(BTThreadPool)
+
+- (void)setThreadPool:(BTThreadPool*)threadPool {
+  _threadPool = threadPool;
+}
+
+@end
+
 @interface BTThread : NSThread
 
 @end
@@ -19,11 +35,13 @@
 @end
 
 @implementation BTThreadPool
+@synthesize delegate = _delegate;
 - (void)dealloc {
   [self cancelAllTasks];
   [self cancelThreads];
   [_taskQueue release];
   [_threadsArray release];
+  _delegate = nil;
   [super dealloc];
 }
 
@@ -57,11 +75,20 @@
 - (void)addTask:(id<BTTask>)newTask {
   @synchronized(_taskQueue) {
     [_taskQueue addObject:newTask];
+    [newTask setThreadPool:self];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [_delegate didAddTask:newTask];
+    });
   }
 }
 - (void)cancelTask:(id<BTTask>)task {
   @synchronized(_taskQueue) {
-    [_taskQueue removeObject:task];
+    if ([_taskQueue containsObject:task]) {
+      [_taskQueue removeObject:task];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [_delegate didCancelTask:task];
+      });
+    }
   }
 }
 - (void)cancelAllTasks {
@@ -85,14 +112,27 @@
         [_taskQueue removeObjectAtIndex:0];
       }
     }
-    if (task && [task isCanceled] == NO) {
-      NSLog(@"%@ process: Task[%@] start", [[NSThread currentThread] name],task);
-      [task run];
-      NSLog(@"%@ process: Task[%@] end", [[NSThread currentThread] name],task);
-      
-      [task release];
+    if (task) {
+      if ([task isCanceled] == NO) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [_delegate willStartTask:task];
+        });
+        NSLog(@"%@ process: Task[%d] start", [[NSThread currentThread] name],task.taskID);
+        [task run];
+        NSLog(@"%@ process: Task[%d] end", [[NSThread currentThread] name],task.taskID);
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [task retain];
+          [_delegate didFinishTask:task];
+          [task release];
+        });
+        [task release];
+      } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [_delegate didCancelTask:task];
+        });
+      }
     } else {
-      [NSThread sleepForTimeInterval:0.1];
+      [NSThread sleepForTimeInterval:0.2];
     }
 
     [pool release];
@@ -101,5 +141,7 @@
 }
 
 @end
+
+
 
 

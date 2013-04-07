@@ -20,7 +20,6 @@
 		3FBC2D8717043D5B00F58D7F /* BTThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */; };
 		3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8917044D8A00F58D7F /* BTTask.m */; };
 		3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */; };
-		3FBC2D8F170451EB00F58D7F /* BTThreadPoolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8E170451EB00F58D7F /* BTThreadPoolViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +44,6 @@
 		3FBC2D8917044D8A00F58D7F /* BTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTask.m; sourceTree = "<group>"; };
 		3FBC2D8B1704508700F58D7F /* BTThreadPoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTThreadPoolViewController.h; sourceTree = "<group>"; };
 		3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTThreadPoolViewController.m; sourceTree = "<group>"; };
-		3FBC2D8E170451EB00F58D7F /* BTThreadPoolViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BTThreadPoolViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +96,6 @@
 				3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */,
 				3FBC2D8B1704508700F58D7F /* BTThreadPoolViewController.h */,
 				3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */,
-				3FBC2D8E170451EB00F58D7F /* BTThreadPoolViewController.xib */,
 				3FBC2D8517043D5B00F58D7F /* BTThreadPool.h */,
 				3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */,
 				3FBC2D8817044D8A00F58D7F /* BTTask.h */,
@@ -178,7 +175,6 @@
 				3FBC2D78170439E400F58D7F /* Default.png in Resources */,
 				3FBC2D7A170439E400F58D7F /* Default@2x.png in Resources */,
 				3FBC2D7C170439E400F58D7F /* Default-568h@2x.png in Resources */,
-				3FBC2D8F170451EB00F58D7F /* BTThreadPoolViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +298,7 @@
 				3FBC2D81170439E400F58D7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

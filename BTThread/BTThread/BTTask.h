@@ -7,16 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class BTThreadPool;
 @protocol BTTask <NSObject>
 - (void)cancel;
 - (BOOL)isCanceled;
 - (void)run;
-
+@property (nonatomic, readonly) NSInteger taskID;
+@property (nonatomic, readonly)  BTThreadPool *threadPool;
 @end
 
 @interface BTTask : NSObject<BTTask> {
-  BOOL _canceled;
+  volatile BOOL _canceled;
+  NSInteger _taskID;
+  BTThreadPool *_threadPool;
 }
 
 @end
