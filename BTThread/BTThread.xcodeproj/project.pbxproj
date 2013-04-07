@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3FBC2D66170439E400F58D7F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBC2D65170439E400F58D7F /* UIKit.framework */; };
+		3FBC2D68170439E400F58D7F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBC2D67170439E400F58D7F /* Foundation.framework */; };
+		3FBC2D6A170439E400F58D7F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBC2D69170439E400F58D7F /* CoreGraphics.framework */; };
+		3FBC2D70170439E400F58D7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC2D6E170439E400F58D7F /* InfoPlist.strings */; };
+		3FBC2D72170439E400F58D7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D71170439E400F58D7F /* main.m */; };
+		3FBC2D76170439E400F58D7F /* BTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D75170439E400F58D7F /* BTAppDelegate.m */; };
+		3FBC2D78170439E400F58D7F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC2D77170439E400F58D7F /* Default.png */; };
+		3FBC2D7A170439E400F58D7F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC2D79170439E400F58D7F /* Default@2x.png */; };
+		3FBC2D7C170439E400F58D7F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC2D7B170439E400F58D7F /* Default-568h@2x.png */; };
+		3FBC2D8417043A1B00F58D7F /* BTRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */; };
+		3FBC2D8717043D5B00F58D7F /* BTThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */; };
+		3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8917044D8A00F58D7F /* BTTask.m */; };
+		3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */; };
+		3FBC2D8F170451EB00F58D7F /* BTThreadPoolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8E170451EB00F58D7F /* BTThreadPoolViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3FBC2D61170439E400F58D7F /* BTThread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTThread.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FBC2D65170439E400F58D7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3FBC2D67170439E400F58D7F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3FBC2D69170439E400F58D7F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3FBC2D6D170439E400F58D7F /* BTThread-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BTThread-Info.plist"; sourceTree = "<group>"; };
+		3FBC2D6F170439E400F58D7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3FBC2D71170439E400F58D7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3FBC2D73170439E400F58D7F /* BTThread-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BTThread-Prefix.pch"; sourceTree = "<group>"; };
+		3FBC2D74170439E400F58D7F /* BTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTAppDelegate.h; sourceTree = "<group>"; };
+		3FBC2D75170439E400F58D7F /* BTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTAppDelegate.m; sourceTree = "<group>"; };
+		3FBC2D77170439E400F58D7F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		3FBC2D79170439E400F58D7F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		3FBC2D7B170439E400F58D7F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3FBC2D8217043A1B00F58D7F /* BTRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRootViewController.h; sourceTree = "<group>"; };
+		3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRootViewController.m; sourceTree = "<group>"; };
+		3FBC2D8517043D5B00F58D7F /* BTThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTThreadPool.h; sourceTree = "<group>"; };
+		3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTThreadPool.m; sourceTree = "<group>"; };
+		3FBC2D8817044D8A00F58D7F /* BTTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTask.h; sourceTree = "<group>"; };
+		3FBC2D8917044D8A00F58D7F /* BTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTask.m; sourceTree = "<group>"; };
+		3FBC2D8B1704508700F58D7F /* BTThreadPoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTThreadPoolViewController.h; sourceTree = "<group>"; };
+		3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTThreadPoolViewController.m; sourceTree = "<group>"; };
+		3FBC2D8E170451EB00F58D7F /* BTThreadPoolViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BTThreadPoolViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3FBC2D5E170439E400F58D7F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FBC2D66170439E400F58D7F /* UIKit.framework in Frameworks */,
+				3FBC2D68170439E400F58D7F /* Foundation.framework in Frameworks */,
+				3FBC2D6A170439E400F58D7F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3FBC2D56170439E400F58D7F = {
+			isa = PBXGroup;
+			children = (
+				3FBC2D6B170439E400F58D7F /* BTThread */,
+				3FBC2D64170439E400F58D7F /* Frameworks */,
+				3FBC2D62170439E400F58D7F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3FBC2D62170439E400F58D7F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FBC2D61170439E400F58D7F /* BTThread.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3FBC2D64170439E400F58D7F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FBC2D65170439E400F58D7F /* UIKit.framework */,
+				3FBC2D67170439E400F58D7F /* Foundation.framework */,
+				3FBC2D69170439E400F58D7F /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FBC2D6B170439E400F58D7F /* BTThread */ = {
+			isa = PBXGroup;
+			children = (
+				3FBC2D74170439E400F58D7F /* BTAppDelegate.h */,
+				3FBC2D75170439E400F58D7F /* BTAppDelegate.m */,
+				3FBC2D8217043A1B00F58D7F /* BTRootViewController.h */,
+				3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */,
+				3FBC2D8B1704508700F58D7F /* BTThreadPoolViewController.h */,
+				3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */,
+				3FBC2D8E170451EB00F58D7F /* BTThreadPoolViewController.xib */,
+				3FBC2D8517043D5B00F58D7F /* BTThreadPool.h */,
+				3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */,
+				3FBC2D8817044D8A00F58D7F /* BTTask.h */,
+				3FBC2D8917044D8A00F58D7F /* BTTask.m */,
+				3FBC2D6C170439E400F58D7F /* Supporting Files */,
+			);
+			path = BTThread;
+			sourceTree = "<group>";
+		};
+		3FBC2D6C170439E400F58D7F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3FBC2D6D170439E400F58D7F /* BTThread-Info.plist */,
+				3FBC2D6E170439E400F58D7F /* InfoPlist.strings */,
+				3FBC2D71170439E400F58D7F /* main.m */,
+				3FBC2D73170439E400F58D7F /* BTThread-Prefix.pch */,
+				3FBC2D77170439E400F58D7F /* Default.png */,
+				3FBC2D79170439E400F58D7F /* Default@2x.png */,
+				3FBC2D7B170439E400F58D7F /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3FBC2D60170439E400F58D7F /* BTThread */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FBC2D7F170439E400F58D7F /* Build configuration list for PBXNativeTarget "BTThread" */;
+			buildPhases = (
+				3FBC2D5D170439E400F58D7F /* Sources */,
+				3FBC2D5E170439E400F58D7F /* Frameworks */,
+				3FBC2D5F170439E400F58D7F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BTThread;
+			productName = BTThread;
+			productReference = 3FBC2D61170439E400F58D7F /* BTThread.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3FBC2D58170439E400F58D7F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BT;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "He baochen";
+			};
+			buildConfigurationList = 3FBC2D5B170439E400F58D7F /* Build configuration list for PBXProject "BTThread" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3FBC2D56170439E400F58D7F;
+			productRefGroup = 3FBC2D62170439E400F58D7F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3FBC2D60170439E400F58D7F /* BTThread */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3FBC2D5F170439E400F58D7F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FBC2D70170439E400F58D7F /* InfoPlist.strings in Resources */,
+				3FBC2D78170439E400F58D7F /* Default.png in Resources */,
+				3FBC2D7A170439E400F58D7F /* Default@2x.png in Resources */,
+				3FBC2D7C170439E400F58D7F /* Default-568h@2x.png in Resources */,
+				3FBC2D8F170451EB00F58D7F /* BTThreadPoolViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3FBC2D5D170439E400F58D7F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FBC2D72170439E400F58D7F /* main.m in Sources */,
+				3FBC2D76170439E400F58D7F /* BTAppDelegate.m in Sources */,
+				3FBC2D8417043A1B00F58D7F /* BTRootViewController.m in Sources */,
+				3FBC2D8717043D5B00F58D7F /* BTThreadPool.m in Sources */,
+				3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */,
+				3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3FBC2D6E170439E400F58D7F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3FBC2D6F170439E400F58D7F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3FBC2D7D170439E400F58D7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3FBC2D7E170439E400F58D7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3FBC2D80170439E400F58D7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BTThread/BTThread-Prefix.pch";
+				INFOPLIST_FILE = "BTThread/BTThread-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3FBC2D81170439E400F58D7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BTThread/BTThread-Prefix.pch";
+				INFOPLIST_FILE = "BTThread/BTThread-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3FBC2D5B170439E400F58D7F /* Build configuration list for PBXProject "BTThread" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FBC2D7D170439E400F58D7F /* Debug */,
+				3FBC2D7E170439E400F58D7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FBC2D7F170439E400F58D7F /* Build configuration list for PBXNativeTarget "BTThread" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FBC2D80170439E400F58D7F /* Debug */,
+				3FBC2D81170439E400F58D7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3FBC2D58170439E400F58D7F /* Project object */;
+}
