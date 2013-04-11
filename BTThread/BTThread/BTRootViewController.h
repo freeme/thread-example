@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BTRootViewController : UITableViewController {
-  NSArray *_examples;
+  NSArray *_threadExamples;
 }
 
 @end

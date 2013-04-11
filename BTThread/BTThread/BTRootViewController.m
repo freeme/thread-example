@@ -8,6 +8,9 @@
 
 #import "BTRootViewController.h"
 #import "BTThreadPoolViewController.h"
+#import "BTThreadPool.h"
+#import "BTLockThreadPool.h"
+#import "BTRunLoopThreadPool.h"
 
 @interface BTRootViewController ()
 
@@ -16,7 +19,7 @@
 @implementation BTRootViewController
 
 - (void)dealloc {
-  [_examples release];
+  [_threadExamples release];
   
   [super dealloc];
 }
@@ -27,7 +30,7 @@
     if (self) {
         // Custom initialization
       self.title = @"BTThread Example";
-      _examples = [[NSArray alloc] initWithObjects:@"Thread Pool", nil];
+      _threadExamples = [[NSArray alloc] initWithObjects:@"BTThreadPool",@"BTLockThreadPool",@"BTRunLoopThreadPool", nil];
     }
     return self;
 }
@@ -53,16 +56,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [_examples count];
+    return [_threadExamples count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +74,10 @@
     cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
   }
     // Configure the cell...
-  cell.textLabel.text = [_examples objectAtIndex:indexPath.row];
+  if (indexPath.section == 0) {
+      cell.textLabel.text = [_threadExamples objectAtIndex:indexPath.row];
+  }
+
     return cell;
 }
 
@@ -120,9 +124,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  BTThreadPoolViewController *poolController = [[BTThreadPoolViewController alloc] init];
-  [self.navigationController pushViewController:poolController animated:YES];
-  [poolController release];
+  if (indexPath.section == 0) {
+    id<BTThreadPool> threadPool = nil;
+    NSString *className = [_threadExamples objectAtIndex:indexPath.row];
+    Class cls = NSClassFromString(className);
+    threadPool = [[cls alloc] initWithPoolSize:2];
+    BTThreadPoolViewController *poolController = [[BTThreadPoolViewController alloc] initWithThreadPool:threadPool];
+    [threadPool release];
+    [self.navigationController pushViewController:poolController animated:YES];
+    [poolController release];
+  } 
+
 }
 
 @end

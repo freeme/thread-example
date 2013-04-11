@@ -14,6 +14,7 @@
 - (void)run;
 @property (nonatomic, readonly) NSInteger taskID;
 @property (nonatomic, readonly)  BTThreadPool *threadPool;
+- (void)setThreadPool:(BTThreadPool*)threadPool;
 @end
 
 @interface BTTask : NSObject<BTTask> {

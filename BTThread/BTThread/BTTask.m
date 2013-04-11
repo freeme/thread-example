@@ -41,4 +41,8 @@ static NSInteger taskIDSeed = 0;
   return _threadPool;
 }
 
+- (void)setThreadPool:(BTThreadPool *)threadPool {
+  _threadPool = threadPool;
+}
+
 @end

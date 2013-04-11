@@ -14,16 +14,14 @@
 
 @implementation BTThreadPoolViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-      _threadPool = [[BTThreadPool alloc] initWithPoolSize:2];
-      _threadPool.delegate = self;
-      _items = [[NSMutableArray alloc] init];
-    }
-    return self;
+- (id)initWithThreadPool:(id<BTThreadPool>)threadPool {
+  self = [super initWithStyle:UITableViewStylePlain];
+  if (self) {
+    _threadPool = [threadPool retain];
+    _threadPool.delegate = self;
+    _items = [[NSMutableArray alloc] init];
+  }
+  return self;
 }
 
 - (void)dealloc {
@@ -50,7 +48,6 @@
     [_threadPool addTask:newTask];
     [newTask release];
   }
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,14 +60,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [_items count];
 }

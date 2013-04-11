@@ -10,8 +10,11 @@
 #import "BTThreadPool.h"
 
 @interface BTThreadPoolViewController : UITableViewController<BTThreadPoolDelegate> {
-  BTThreadPool* _threadPool;
+  id<BTThreadPool> _threadPool;
   NSMutableArray *_items;
 }
+
+- (id)initWithThreadPool:(id<BTThreadPool>)threadPool;
+
 
 @end
