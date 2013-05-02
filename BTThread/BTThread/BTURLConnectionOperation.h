@@ -8,9 +8,8 @@
 
 #import "BTConcurrentOperation.h"
 
-@interface BTURLConnectionOperation : BTConcurrentOperation {
-  NSOutputStream *_outputStream;
-  NSURLConnection *_connection;
+@interface BTURLConnectionOperation : BTConcurrentOperation<NSURLConnectionDataDelegate> {
+
 }
 
 /**

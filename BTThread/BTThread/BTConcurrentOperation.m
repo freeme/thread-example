@@ -68,6 +68,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 @property (nonatomic) BTOperationState state;
 @property (nonatomic) NSRecursiveLock *lock;
 @property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
+- (void)finish;
 @end
 
 @implementation BTConcurrentOperation
