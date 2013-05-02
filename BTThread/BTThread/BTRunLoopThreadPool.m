@@ -219,6 +219,13 @@ void BTRunLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity 
       [_idleThreads addObject:[NSRunLoop currentRunLoop]];
     } else if (activity == kCFRunLoopAfterWaiting) {
       //[_idleThreads removeObject:[NSRunLoop currentRunLoop]];
+      NSRunLoop *runLoop = nil;
+      if ([_idleThreads count] > 0) {
+        runLoop = [_idleThreads anyObject];
+        [_idleThreads removeObject:runLoop];
+        CFRunLoopSourceSignal(_runLoopSource);
+        CFRunLoopWakeUp([runLoop getCFRunLoop]);
+      }
     }
   }
   //NSLog(@"%@,activity:%lu _idleThreads count:%d",[[NSThread currentThread] name],activity,[_idleThreads count]);

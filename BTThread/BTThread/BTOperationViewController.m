@@ -1,50 +1,54 @@
 //
-//  BTRootViewController.m
+//  BTOperationViewController.m
 //  BTThread
 //
-//  Created by He baochen on 13-3-28.
+//  Created by Gary on 13-4-30.
 //  Copyright (c) 2013年 He baochen. All rights reserved.
 //
 
-#import "BTRootViewController.h"
-#import "BTThreadPoolViewController.h"
 #import "BTOperationViewController.h"
-#import "BTThreadPool.h"
-#import "BTLockThreadPool.h"
-#import "BTRunLoopThreadPool.h"
+#import "BTConcurrentOperation.h"
 
-@interface BTRootViewController ()
+@interface BTOperationViewController ()
 
 @end
 
-@implementation BTRootViewController
-
-- (void)dealloc {
-  [_threadExamples release];
-  
-  [super dealloc];
-}
+@implementation BTOperationViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-      self.title = @"BTThread Example";
-      _threadExamples = [[NSArray alloc] initWithObjects:@"BTThreadPool",@"BTLockThreadPool",@"BTRunLoopThreadPool", nil];
+      _queue = [[NSOperationQueue alloc] init];
+      [_queue setMaxConcurrentOperationCount:2];
+      
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
   
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  // Uncomment the following line to preserve selection between presentations.
+  self.clearsSelectionOnViewWillAppear = YES;
+  
+  // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+  self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)] autorelease];
+}
+
+- (void)addTask {
+  for (int i = 0; i < 5; i++) {
+    BTConcurrentOperation *op = [[BTConcurrentOperation alloc] init];
+    op.name = [NSString stringWithFormat:@"#op%d",i];
+    [_queue addOperation:op];
+    [op release];
+  }
+  [NSThread sleepForTimeInterval:0.5];
+  for (NSOperation *op in [_queue operations]) {
+    [op cancel];
+  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,35 +61,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 2;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-  if (section == 0) {
-    return [_threadExamples count];
-  } else {
-    return 1;
-  }
-    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  if (cell == nil) {
-    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-  }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
     // Configure the cell...
-  if (indexPath.section == 0) {
-      cell.textLabel.text = [_threadExamples objectAtIndex:indexPath.row];
-  } else {
-    cell.textLabel.text = @"Concurrent Operation";
-  }
-
+    
     return cell;
 }
 
@@ -132,21 +126,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if (indexPath.section == 0) {
-    id<BTThreadPool> threadPool = nil;
-    NSString *className = [_threadExamples objectAtIndex:indexPath.row];
-    Class cls = NSClassFromString(className);
-    threadPool = [[cls alloc] initWithPoolSize:2];
-    BTThreadPoolViewController *poolController = [[BTThreadPoolViewController alloc] initWithThreadPool:threadPool];
-    [threadPool release];
-    [self.navigationController pushViewController:poolController animated:YES];
-    [poolController release];
-  } else if (indexPath.section == 1) {
-    BTOperationViewController *viewController = [[BTOperationViewController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:viewController animated:YES];
-    [viewController release];
-  }
-
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     [detailViewController release];
+     */
 }
 
 @end

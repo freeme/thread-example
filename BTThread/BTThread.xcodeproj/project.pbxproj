@@ -21,7 +21,10 @@
 		3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8917044D8A00F58D7F /* BTTask.m */; };
 		3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */; };
 		4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */; };
+		4E53086317312AAE00607C47 /* BTURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E53086217312AAE00607C47 /* BTURLConnectionOperation.m */; };
 		4E7B23E91712E90100551006 /* BTRunLoopThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */; };
+		4EFA75DF172FFD5E002FC5F1 /* BTConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */; };
+		4EFA75E2172FFF63002FC5F1 /* BTOperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,10 +51,14 @@
 		3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTThreadPoolViewController.m; sourceTree = "<group>"; };
 		4E43A1161716B45A00F7AD38 /* BTLockThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLockThreadPool.h; sourceTree = "<group>"; };
 		4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLockThreadPool.m; sourceTree = "<group>"; };
-		4E4744621711C6B4000AF9AD /* BTOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTOperation.h; sourceTree = "<group>"; };
-		4E4744631711C6B4000AF9AD /* BTOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTOperation.m; sourceTree = "<group>"; };
+		4E4744621711C6B4000AF9AD /* BTConcurrentOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTConcurrentOperation.h; sourceTree = "<group>"; };
+		4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTConcurrentOperation.m; sourceTree = "<group>"; };
+		4E53086117312AAD00607C47 /* BTURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTURLConnectionOperation.h; sourceTree = "<group>"; };
+		4E53086217312AAE00607C47 /* BTURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTURLConnectionOperation.m; sourceTree = "<group>"; };
 		4E7B23E71712E90100551006 /* BTRunLoopThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRunLoopThreadPool.h; sourceTree = "<group>"; };
 		4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRunLoopThreadPool.m; sourceTree = "<group>"; };
+		4EFA75E0172FFF63002FC5F1 /* BTOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTOperationViewController.h; sourceTree = "<group>"; };
+		4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTOperationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +150,12 @@
 		4E4744611711C6A0000AF9AD /* Operation */ = {
 			isa = PBXGroup;
 			children = (
-				4E4744621711C6B4000AF9AD /* BTOperation.h */,
-				4E4744631711C6B4000AF9AD /* BTOperation.m */,
+				4E4744621711C6B4000AF9AD /* BTConcurrentOperation.h */,
+				4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */,
+				4E53086117312AAD00607C47 /* BTURLConnectionOperation.h */,
+				4E53086217312AAE00607C47 /* BTURLConnectionOperation.m */,
+				4EFA75E0172FFF63002FC5F1 /* BTOperationViewController.h */,
+				4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -215,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFA75DF172FFD5E002FC5F1 /* BTConcurrentOperation.m in Sources */,
 				3FBC2D72170439E400F58D7F /* main.m in Sources */,
 				3FBC2D76170439E400F58D7F /* BTAppDelegate.m in Sources */,
 				3FBC2D8417043A1B00F58D7F /* BTRootViewController.m in Sources */,
@@ -223,6 +235,8 @@
 				3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */,
 				4E7B23E91712E90100551006 /* BTRunLoopThreadPool.m in Sources */,
 				4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */,
+				4EFA75E2172FFF63002FC5F1 /* BTOperationViewController.m in Sources */,
+				4E53086317312AAE00607C47 /* BTURLConnectionOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
