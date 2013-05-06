@@ -8,10 +8,28 @@
 
 #import "BTConcurrentOperation.h"
 
-@interface BTURLConnectionOperation : BTConcurrentOperation<NSURLConnectionDataDelegate> {
+@class BTURLRequestOperation;
+@protocol BTURLRequestDelegate <NSObject>
 
+@optional
+- (void)requestStarted:(BTURLRequestOperation *)operation;
+- (void)requestFinished:(BTURLRequestOperation *)operation;
+- (void)requestFailed:(BTURLRequestOperation *)operation;
+
+// When a delegate implements this method, it is expected to process all incoming data itself
+// This means that responseData / responseString / downloadDestinationPath etc are ignored
+// You can have the request call a different method by setting didReceiveDataSelector
+- (void)request:(BTURLRequestOperation *)operation didReceiveData:(NSData *)data;
+
+@end
+
+@interface BTURLRequestOperation : BTConcurrentOperation<NSURLConnectionDataDelegate> {
+  id<BTURLRequestDelegate> _delegate;
 }
 
+- (id)initWithRequest:(NSURLRequest*)request delegate:(id<BTURLRequestDelegate>)delegate;
+
+- (void)setDelegate:(id<BTURLRequestDelegate>)delegate;
 /**
  The request used by the operation's connection.
  */

@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 He baochen. All rights reserved.
 //
 
-#import "BTURLConnectionOperation.h"
+#import "BTURLRequestOperation.h"
 
-@interface BTURLConnectionOperation()
+@interface BTURLRequestOperation()
 
 ///------------------------
 /// @name Accessing Streams
@@ -33,25 +33,35 @@
 @property (nonatomic, retain) NSData *responseData;
 @property (nonatomic, retain) NSError *error;
 
-- (void)finish;
+
+- (void)markOperationFinish;
+- (void)concurrentExecution;
+- (void)cancelConcurrentExecution;
+- (void)closeConnection;
 @end
 
-@implementation BTURLConnectionOperation
+@implementation BTURLRequestOperation
 
 - (void)dealloc {
   self.request = nil;
   self.response = nil;
   self.responseData = nil;
-  [self.outputStream close];
-  self.outputStream = nil;
+  [self closeConnection];
   self.error = nil;
   [super dealloc];
 }
 
-- (id)initWithRequest:(NSURLRequest *)urlRequest {
+- (void)closeConnection {
+  [self.outputStream close];
+  self.outputStream = nil;
+  self.connection = nil;
+}
+
+- (id)initWithRequest:(NSURLRequest *)urlRequest delegate:(id<BTURLRequestDelegate>)delegate{
   self = [super init];
   if (self) {
     self.request = urlRequest;
+    _delegate = delegate;
   }
   return self;
 }
@@ -60,6 +70,11 @@
  Subclass should overwrite this method
  */
 - (void)concurrentExecution {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if (_delegate && [_delegate respondsToSelector:@selector(requestStarted:)]) {
+      [_delegate performSelector:@selector(requestStarted:) withObject:self];
+    }
+  });
   _connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];
   
   NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
@@ -81,13 +96,13 @@
   if ([self.request URL]) {
     userInfo = [NSDictionary dictionaryWithObject:[self.request URL] forKey:NSURLErrorFailingURLErrorKey];
   }
-  self.error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:userInfo];
+  NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:userInfo];
   
   if (self.connection) {
     [self.connection cancel];
     
     // Manually send this delegate message since `[self.connection cancel]` causes the connection to never send another message to its delegate
-    [self performSelector:@selector(connection:didFailWithError:) withObject:self.connection withObject:self.error];
+    [self performSelector:@selector(connection:didFailWithError:) withObject:self.connection withObject:error];
   }
 }
 
@@ -101,9 +116,33 @@
  
  */
 - (void)connection:(NSURLConnection __unused *)connection didReceiveResponse:(NSURLResponse *)response {
+  long long contentLength = [response expectedContentLength];
   self.response = response;
   self.outputStream = [NSOutputStream outputStreamToMemory];
   [self.outputStream open];
+  if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    if (([httpResponse statusCode]/100) != 2) {
+      NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:httpResponse.statusCode userInfo:nil];
+      [self performSelector:@selector(connection:didFailWithError:) withObject:connection withObject:error];
+    } 
+  }
+  //      NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+  //      NSString *modified = [headers objectForKey:@"Last-Modified"];
+  //      if (modified) {
+  //        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  //
+  //        /* avoid problem if the user's locale is incompatible with HTTP-style dates */
+  //        [dateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease]];
+  //
+  //        [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+  //        self.lastModified = [dateFormatter dateFromString:modified];
+  //        [dateFormatter release];
+  //      }
+  //      else {
+  //        /* default if last modified date doesn't exist (not an error) */
+  //        self.lastModified = [NSDate dateWithTimeIntervalSinceReferenceDate:0];
+  //      }
 }
 
 - (void)connection:(NSURLConnection __unused *)connection didReceiveData:(NSData *)data {
@@ -125,20 +164,30 @@
 - (void)connectionDidFinishLoading:(NSURLConnection __unused *)connection {
   self.responseData = [_outputStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
   
-  [self.outputStream close];
-  self.outputStream = nil;
-  
-  [self finish];
-  self.connection = nil;
+  [self closeConnection];
+  [self markOperationFinish];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if (_delegate && [_delegate respondsToSelector:@selector(requestFinished:)]) {
+      [_delegate performSelector:@selector(requestFinished:) withObject:self];
+    }
+  });
 }
 
 - (void)connection:(NSURLConnection __unused *)connection didFailWithError:(NSError *)error {
   self.error = error;
   
-  [self.outputStream close];
-  self.outputStream = nil;
-  [self finish];
-  self.connection = nil;
+  [self closeConnection];
+  [self markOperationFinish];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if (_delegate && [_delegate respondsToSelector:@selector(requestFailed:)]) {
+      [_delegate performSelector:@selector(requestFailed:) withObject:self];
+    }
+  });
 }
-
+#pragma mark -
+- (void)setDelegate:(id<BTURLRequestDelegate>)delegate {
+  [_lock lock];
+  _delegate = delegate;
+  [_lock unlock];
+}
 @end

@@ -20,9 +20,10 @@
 		3FBC2D8717043D5B00F58D7F /* BTThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */; };
 		3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8917044D8A00F58D7F /* BTTask.m */; };
 		3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */; };
-		4E3B7A401732ACD2005F7FD8 /* BTHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3B7A3F1732ACD2005F7FD8 /* BTHTTPOperation.m */; };
+		4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */; };
 		4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */; };
-		4E53086317312AAE00607C47 /* BTURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E53086217312AAE00607C47 /* BTURLConnectionOperation.m */; };
+		4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E53086217312AAE00607C47 /* BTURLRequestOperation.m */; };
+		4E657EF91737E7F600A46AAF /* UIImageView+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E657EF81737E7F600A46AAF /* UIImageView+Network.m */; };
 		4E7B23E91712E90100551006 /* BTRunLoopThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */; };
 		4EFA75DF172FFD5E002FC5F1 /* BTConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */; };
 		4EFA75E2172FFF63002FC5F1 /* BTOperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */; };
@@ -50,14 +51,16 @@
 		3FBC2D8917044D8A00F58D7F /* BTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTask.m; sourceTree = "<group>"; };
 		3FBC2D8B1704508700F58D7F /* BTThreadPoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTThreadPoolViewController.h; sourceTree = "<group>"; };
 		3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTThreadPoolViewController.m; sourceTree = "<group>"; };
-		4E3B7A3E1732ACD2005F7FD8 /* BTHTTPOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTHTTPOperation.h; sourceTree = "<group>"; };
-		4E3B7A3F1732ACD2005F7FD8 /* BTHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTHTTPOperation.m; sourceTree = "<group>"; };
+		4E050E611737F5BF00B4FAE4 /* UIViewController+UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UIImageView.h"; sourceTree = "<group>"; };
+		4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UIImageView.m"; sourceTree = "<group>"; };
 		4E43A1161716B45A00F7AD38 /* BTLockThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLockThreadPool.h; sourceTree = "<group>"; };
 		4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLockThreadPool.m; sourceTree = "<group>"; };
 		4E4744621711C6B4000AF9AD /* BTConcurrentOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTConcurrentOperation.h; sourceTree = "<group>"; };
 		4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTConcurrentOperation.m; sourceTree = "<group>"; };
-		4E53086117312AAD00607C47 /* BTURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTURLConnectionOperation.h; sourceTree = "<group>"; };
-		4E53086217312AAE00607C47 /* BTURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTURLConnectionOperation.m; sourceTree = "<group>"; };
+		4E53086117312AAD00607C47 /* BTURLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTURLRequestOperation.h; sourceTree = "<group>"; };
+		4E53086217312AAE00607C47 /* BTURLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTURLRequestOperation.m; sourceTree = "<group>"; };
+		4E657EF71737E7F600A46AAF /* UIImageView+Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Network.h"; sourceTree = "<group>"; };
+		4E657EF81737E7F600A46AAF /* UIImageView+Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Network.m"; sourceTree = "<group>"; };
 		4E7B23E71712E90100551006 /* BTRunLoopThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRunLoopThreadPool.h; sourceTree = "<group>"; };
 		4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRunLoopThreadPool.m; sourceTree = "<group>"; };
 		4EFA75E0172FFF63002FC5F1 /* BTOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTOperationViewController.h; sourceTree = "<group>"; };
@@ -155,12 +158,14 @@
 			children = (
 				4E4744621711C6B4000AF9AD /* BTConcurrentOperation.h */,
 				4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */,
-				4E53086117312AAD00607C47 /* BTURLConnectionOperation.h */,
-				4E53086217312AAE00607C47 /* BTURLConnectionOperation.m */,
-				4E3B7A3E1732ACD2005F7FD8 /* BTHTTPOperation.h */,
-				4E3B7A3F1732ACD2005F7FD8 /* BTHTTPOperation.m */,
+				4E53086117312AAD00607C47 /* BTURLRequestOperation.h */,
+				4E53086217312AAE00607C47 /* BTURLRequestOperation.m */,
 				4EFA75E0172FFF63002FC5F1 /* BTOperationViewController.h */,
 				4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */,
+				4E657EF71737E7F600A46AAF /* UIImageView+Network.h */,
+				4E657EF81737E7F600A46AAF /* UIImageView+Network.m */,
+				4E050E611737F5BF00B4FAE4 /* UIViewController+UIImageView.h */,
+				4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -241,8 +246,9 @@
 				4E7B23E91712E90100551006 /* BTRunLoopThreadPool.m in Sources */,
 				4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */,
 				4EFA75E2172FFF63002FC5F1 /* BTOperationViewController.m in Sources */,
-				4E53086317312AAE00607C47 /* BTURLConnectionOperation.m in Sources */,
-				4E3B7A401732ACD2005F7FD8 /* BTHTTPOperation.m in Sources */,
+				4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */,
+				4E657EF91737E7F600A46AAF /* UIImageView+Network.m in Sources */,
+				4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

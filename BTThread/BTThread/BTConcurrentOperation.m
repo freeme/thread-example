@@ -66,9 +66,10 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 
 @interface BTConcurrentOperation()
 @property (nonatomic) BTOperationState state;
-@property (nonatomic) NSRecursiveLock *lock;
 @property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
-- (void)finish;
+- (void)markOperationFinish;
+- (void)concurrentExecution;
+- (void)cancelConcurrentExecution;
 @end
 
 @implementation BTConcurrentOperation
@@ -94,14 +95,14 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 - (void)dealloc {
   self.name = nil;
   self.runLoopModes = nil;
-  self.lock = nil;
+  [_lock release];
   [super dealloc];
 }
 
 - (id) init {
   self = [super init];
   if (self) {
-    self.lock = [[NSRecursiveLock alloc] init];
+    _lock = [[NSRecursiveLock alloc] init];
     self.state = BTOperationReadyState;
     self.runLoopModes = [NSSet setWithObject:NSRunLoopCommonModes];
   }
@@ -113,7 +114,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
     return;
   }
   
-  [self.lock lock];
+  [_lock lock];
   NSString *oldStateKey = BTKeyPathFromOperationState(self.state);
   NSString *newStateKey = BTKeyPathFromOperationState(state);
   
@@ -122,7 +123,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
   _state = state;
   [self didChangeValueForKey:oldStateKey];
   [self didChangeValueForKey:newStateKey];
-  [self.lock unlock];
+  [_lock unlock];
 }
 
 #pragma mark - NSOperation
@@ -145,31 +146,31 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 
 - (void)start {
   NSLog(@"start >> th:%@-op:%@",[NSThread currentThread],self.name);
-  [self.lock lock];
+  [_lock lock];
   if ([self isCancelled]) {
-    [self finish];
+    [self markOperationFinish];
     return;
   } else if ([self isReady]) {
     self.state = BTOperationExecutingState;
     [self performSelector:@selector(main) onThread:[[self class] internalThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];
   }
-  [self.lock unlock];
+  [_lock unlock];
 }
 
 - (void)main {
-  [self.lock lock];
+  [_lock lock];
   @autoreleasepool {
     NSLog(@"main >> th:%@-op:%@",[NSThread currentThread],self.name);
     if (![self isCancelled]) {
       [self concurrentExecution];
     }
   }
-  [self.lock unlock];
+  [_lock unlock];
   dispatch_async(dispatch_get_main_queue(), ^{
       [self notifyAfterExecutionOnMainThread];
   });
   if ([self isCancelled]) {
-    [self finish];
+    [self markOperationFinish];
   }
   
 }
@@ -193,7 +194,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
   [self performSelector:@selector(finish) onThread:[[self class] internalThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];
 }
 
-- (void)finish {
+- (void)markOperationFinish {
   self.state = BTOperationFinishedState;
   
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -203,7 +204,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 }
 
 - (void)cancel {
-  [self.lock lock];
+  [_lock lock];
   if (![self isFinished] && ![self isCancelled]) {
     [self willChangeValueForKey:@"isCancelled"];
     _cancelled = YES;
@@ -213,7 +214,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
     // Cancel the connection on the thread it runs on to prevent race conditions
     [self performSelector:@selector(cancelConcurrentExecution) onThread:[[self class] internalThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];
   }
-  [self.lock unlock];
+  [_lock unlock];
 }
 /**
  Subclass should overwrite this method

@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-@interface BTConcurrentOperation : NSOperation
+@interface BTConcurrentOperation : NSOperation {
+  NSRecursiveLock *_lock;
+}
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, retain) NSSet *runLoopModes;
 @end
