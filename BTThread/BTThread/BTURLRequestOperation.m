@@ -82,7 +82,9 @@
     [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];
     [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];
   }
-  
+  if (_delegate && [_delegate respondsToSelector:@selector(request:didReceiveData:)]) {
+    _receiveDataExternally = YES;
+  }
   [self.connection start];
   
 
@@ -146,19 +148,26 @@
 }
 
 - (void)connection:(NSURLConnection __unused *)connection didReceiveData:(NSData *)data {
-  if ([self.outputStream hasSpaceAvailable]) {
-    const uint8_t *dataBuffer = (uint8_t *) [data bytes];
-    [self.outputStream write:&dataBuffer[0] maxLength:[data length]];
+  if (_receiveDataExternally) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (_delegate && [_delegate respondsToSelector:@selector(request:didReceiveData:)]) {
+        [_delegate performSelector:@selector(request:didReceiveData:) withObject:self withObject:data];
+      }
+    });
+  } else {
+    if ([self.outputStream hasSpaceAvailable]) {
+      const uint8_t *dataBuffer = (uint8_t *) [data bytes];
+      [self.outputStream write:&dataBuffer[0] maxLength:[data length]];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        //TODO:
+        //    self.totalBytesRead += [data length];
+        //
+        //    if (self.downloadProgress) {
+        //      self.downloadProgress([data length], self.totalBytesRead, self.response.expectedContentLength);
+        //    }
+      });
+    }
   }
-  
-  dispatch_async(dispatch_get_main_queue(), ^{
-    //TODO: 
-//    self.totalBytesRead += [data length];
-//    
-//    if (self.downloadProgress) {
-//      self.downloadProgress([data length], self.totalBytesRead, self.response.expectedContentLength);
-//    }
-  });
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection __unused *)connection {
