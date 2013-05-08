@@ -86,7 +86,7 @@
     _receiveDataExternally = YES;
   }
   [self.connection start];
-  
+  NSLog(@"%@ self.connection start",self);
 
 }
 
@@ -94,6 +94,7 @@
  Subclass should overwrite this method
  */
 - (void)cancelConcurrentExecution {
+  [super cancelConcurrentExecution];
   NSDictionary *userInfo = nil;
   if ([self.request URL]) {
     userInfo = [NSDictionary dictionaryWithObject:[self.request URL] forKey:NSURLErrorFailingURLErrorKey];
@@ -184,7 +185,7 @@
 
 - (void)connection:(NSURLConnection __unused *)connection didFailWithError:(NSError *)error {
   self.error = error;
-  
+  NSLog(@"error = %@", error);
   [self closeConnection];
   [self markOperationFinish];
   dispatch_async(dispatch_get_main_queue(), ^{

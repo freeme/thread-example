@@ -15,13 +15,13 @@
 
 @implementation UIViewController (UIImageView)
 
-- (void)viewWillAppear:(BOOL)animated {
-  [self reloadImageRequestIfNeed];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-  [self cancelImageRequestIfNeed];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//  [self reloadImageRequestIfNeed];
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated {
+//  [self cancelImageRequestIfNeed];
+//}
 
 - (void)reloadImageViewIfNeed {
   [self findImageViewInParentView:self.view andPerformSelector:@selector(reloadImageRequestIfNeed)];

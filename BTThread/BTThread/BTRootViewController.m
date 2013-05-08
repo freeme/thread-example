@@ -79,16 +79,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
     cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    //NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"Default" ofType:@"png"];
-    //NSLog(@"imagePath = %@", imagePath);
-//    NSURL *imageURL = [[NSBundle mainBundle] URLForResource:@"Default" withExtension:@"png"];
-////    NSLog(@"imageURL = %@", imageURL);
-////    NSLog(@"imageURL relativePath = %@", [imageURL relativePath]);
-////    NSLog(@"imageURL absoluteString = %@", [imageURL absoluteString]);
-//    [cell.imageView setImageWithURL:imageURL];
-    cell.imageView.clipsToBounds = YES;
-    cell.imageView.contentMode = UIViewContentModeCenter;
-//    cell.imageView.image = [UIImage imageNamed:@"Default.png"];
   }
     // Configure the cell...
   if (indexPath.section == 0) {
@@ -96,12 +86,6 @@
   } else {
     cell.textLabel.text = @"Concurrent Operation";
   }
-  NSURL *imageURL = [[NSBundle mainBundle] URLForResource:@"icon2" withExtension:@"png"];
-//  [cell.imageView setImageWithURL:imageURL];
-  UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 0, 44, 44)];
-  [cell.contentView addSubview:imageView];
-  [imageView setImageWithURL:imageURL];
-  [imageView release];
     return cell;
 }
 

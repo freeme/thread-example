@@ -45,13 +45,14 @@ static char kBTImageRequestOperationObjectKey;
 }
 - (void)setImageWithURL:(NSURL *)url {
   //TODO: check if need cancel
+  self.image = nil;
   [self cancelImageRequestOperation];
   if ([url isFileURL]) {
-    NSLog(@"isFileURL = YES fileReferenceURL=%@ filePathURL=%@", [url fileReferenceURL],[url filePathURL]);
+    //NSLog(@"isFileURL = YES fileReferenceURL=%@ filePathURL=%@", [url fileReferenceURL],[url filePathURL]);
   }
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-[request setHTTPShouldHandleCookies:NO];
-[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+//[request setHTTPShouldHandleCookies:NO];
+//[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
   BTURLRequestOperation *operation = [[BTURLRequestOperation alloc] initWithRequest:request delegate:self];
   self.imageRequestOperation = operation;
   [[[self class] sharedImageRequestOperationQueue] addOperation:operation];

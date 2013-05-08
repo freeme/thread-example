@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BTOperationViewController : UITableViewController {
-  NSOperationQueue *_queue;
+  NSMutableArray *_users; 
 }
 
 @end

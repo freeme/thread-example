@@ -8,6 +8,7 @@
 
 #import "BTOperationViewController.h"
 #import "BTConcurrentOperation.h"
+#import "UIImageView+Network.h"
 
 @interface BTOperationViewController ()
 
@@ -19,10 +20,19 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
-      _queue = [[NSOperationQueue alloc] init];
-      [_queue setMaxConcurrentOperationCount:2];
+      _users = [[NSMutableArray alloc] initWithCapacity:10];
       
+      NSURL *url = [[NSBundle mainBundle] URLForResource:@"global0" withExtension:@"json"];
+      NSData *data = [NSData dataWithContentsOfURL:url];
+      id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
+      NSArray *postsFromResponse = [responseJSON valueForKeyPath:@"data"];
+      
+      for (NSDictionary *attributes in postsFromResponse) {
+//        _users u = [attributes valueForKeyPath:@"user.avatar_image.url"];
+//        NSString *coverURL = [attributes valueForKeyPath:@"user.cover_image.url"];
+        [_users addObject:[attributes valueForKeyPath:@"user"]];
+        //[_users addObject:coverURL];
+      }
     }
     return self;
 }
@@ -34,21 +44,6 @@
   // Uncomment the following line to preserve selection between presentations.
   self.clearsSelectionOnViewWillAppear = YES;
   
-  // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-  self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTask)] autorelease];
-}
-
-- (void)addTask {
-  for (int i = 0; i < 5; i++) {
-    BTConcurrentOperation *op = [[BTConcurrentOperation alloc] init];
-    op.name = [NSString stringWithFormat:@"#op%d",i];
-    [_queue addOperation:op];
-    [op release];
-  }
-  [NSThread sleepForTimeInterval:0.5];
-  for (NSOperation *op in [_queue operations]) {
-    [op cancel];
-  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,24 +58,45 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [_users count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+  static NSString *CellIdentifier = @"Cell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+  if (cell == nil) {
+    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    {
+      UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(200, 0, 44, 44)];
+      [cell addSubview:imageView];
+      imageView.tag = 100;
+      [imageView release];
+    }
+    {
+      UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 0, 44, 44)];
+      [cell addSubview:imageView];
+      imageView.tag = 200;
+      [imageView release];
+    }
+  }
+  cell.textLabel.text = [[_users objectAtIndex:indexPath.row] valueForKeyPath:@"username"];
+  {
+    UIImageView *imageView = (UIImageView*)[cell viewWithTag:100];
+    [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"avatar_image.url"]]];
+  }
+  {
+    UIImageView *imageView = (UIImageView*)[cell viewWithTag:200];
+    [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"cover_image.url"]]];
+  }
+  return cell;
 }
 
 /*
