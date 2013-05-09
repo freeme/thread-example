@@ -7,23 +7,32 @@
 //
 
 #import "UIViewController+UIImageView.h"
+#import <objc/runtime.h>
 
 @interface UIViewController(_UIImageView)
 - (void)reloadImageRequestIfNeed;
-- (void)cancelAllImageRequest;
+- (void)cancelImageRequestIfNeed;
 @end
 
 @implementation UIViewController (UIImageView)
 
-- (void)viewWillAppear:(BOOL)animated {
++ (void)initialize {
+  Class klass = [UIViewController class];
+  method_exchangeImplementations(class_getInstanceMethod(klass,@selector(viewWillAppear:)),class_getInstanceMethod(klass, @selector(__replacedViewWillAppear:)));
+  method_exchangeImplementations(class_getInstanceMethod(klass,@selector(viewWillDisappear:)),class_getInstanceMethod(klass, @selector(__replacedViewWillDisappear:)));
+}
+
+- (void)__replacedViewWillAppear:(BOOL)animated {
+  NSLog(@"replaced %s ",__FUNCTION__);
   [self reloadImageRequestIfNeed];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)__replacedViewWillDisappear:(BOOL)animated {
+  NSLog(@"replaced %s ",__FUNCTION__);
   [self cancelImageRequestIfNeed];
 }
 
-- (void)reloadImageViewIfNeed {
+- (void)reloadImageRequestIfNeed {
   [self findImageViewInParentView:self.view andPerformSelector:@selector(reloadImageRequestIfNeed)];
 }
 

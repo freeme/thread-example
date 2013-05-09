@@ -44,7 +44,7 @@ static char kBTImageRequestOperationObjectKey;
   return __imageRequestOperationQueue;
 }
 - (void)setImageWithURL:(NSURL *)url {
-  UIViewController *viewController;
+  //UIViewController *viewController;
 }
 
 - (void)cancelImageRequestOperation {
@@ -53,5 +53,7 @@ static char kBTImageRequestOperationObjectKey;
   self.imageRequestOperation = nil;
 }
 
-
+- (void)reloadImageRequestIfNeed {
+  
+}
 @end
