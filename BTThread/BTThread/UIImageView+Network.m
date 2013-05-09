@@ -38,13 +38,25 @@ static char kBTImageRequestOperationObjectKey;
   static dispatch_once_t __onceToken;
   dispatch_once(&__onceToken, ^{
     __imageRequestOperationQueue = [[NSOperationQueue alloc] init];
-    [__imageRequestOperationQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
+    [__imageRequestOperationQueue setMaxConcurrentOperationCount:1];
   });
   
   return __imageRequestOperationQueue;
 }
 - (void)setImageWithURL:(NSURL *)url {
-  //UIViewController *viewController;
+  //TODO: check if need cancel
+  self.image = nil;
+  [self cancelImageRequestOperation];
+  if ([url isFileURL]) {
+    //NSLog(@"isFileURL = YES fileReferenceURL=%@ filePathURL=%@", [url fileReferenceURL],[url filePathURL]);
+  }
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//[request setHTTPShouldHandleCookies:NO];
+//[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+  BTURLRequestOperation *operation = [[BTURLRequestOperation alloc] initWithRequest:request delegate:self];
+  self.imageRequestOperation = operation;
+  [[[self class] sharedImageRequestOperationQueue] addOperation:operation];
+  [operation release];
 }
 
 - (void)cancelImageRequestOperation {
@@ -53,7 +65,27 @@ static char kBTImageRequestOperationObjectKey;
   self.imageRequestOperation = nil;
 }
 
+
 - (void)reloadImageRequestIfNeed {
   
 }
+
+#pragma mark BTURLRequestDelegate
+- (void)requestStarted:(BTURLRequestOperation *)operation {
+  
+}
+- (void)requestFinished:(BTURLRequestOperation *)operation {
+
+  if ([operation.responseData length] > 0) {
+    UIImage *image = [UIImage imageWithData:operation.responseData];
+    self.image = image;
+    //self.image = [UIImage imageWithCGImage:[image CGImage] scale:[[UIScreen mainScreen] scale] orientation:image.imageOrientation];
+//    [self setNeedsDisplay];
+//    self.image = [UIImage imageWithCGImage:[image CGImage] scale:[[UIScreen mainScreen] scale] orientation:image.imageOrientation];
+  }
+}
+- (void)requestFailed:(BTURLRequestOperation *)operation {
+  
+}
+
 @end

@@ -32,6 +32,7 @@
   [self cancelImageRequestIfNeed];
 }
 
+
 - (void)reloadImageRequestIfNeed {
   [self findImageViewInParentView:self.view andPerformSelector:@selector(reloadImageRequestIfNeed)];
 }

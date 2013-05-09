@@ -25,6 +25,7 @@
 
 @interface BTURLRequestOperation : BTConcurrentOperation<NSURLConnectionDataDelegate> {
   id<BTURLRequestDelegate> _delegate;
+  BOOL _receiveDataExternally;
 }
 
 - (id)initWithRequest:(NSURLRequest*)request delegate:(id<BTURLRequestDelegate>)delegate;

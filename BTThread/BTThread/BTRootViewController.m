@@ -12,6 +12,7 @@
 #import "BTThreadPool.h"
 #import "BTLockThreadPool.h"
 #import "BTRunLoopThreadPool.h"
+#import "UIImageView+Network.h"
 
 @interface BTRootViewController ()
 
@@ -85,7 +86,6 @@
   } else {
     cell.textLabel.text = @"Concurrent Operation";
   }
-
     return cell;
 }
 
