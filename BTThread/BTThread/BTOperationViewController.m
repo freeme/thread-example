@@ -95,6 +95,10 @@
   {
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:200];
     [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"cover_image.url"]]];
+    
+    NSURL *url1 = [NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"cover_image.url"]];
+    NSURL *url2 = [NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"cover_image.url"]];
+    NSLog(@"url1 == url2:%d", [url1 isEqual:url2]);
   }
   return cell;
 }

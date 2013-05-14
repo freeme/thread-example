@@ -8,20 +8,41 @@
 #import <objc/runtime.h>
 #import "UIImageView+Network.h"
 
+typedef NS_OPTIONS(NSUInteger, UIImageViewRequestFlag) {
+  UIImageViewRequestFlagNone        = 0,
+  UIImageViewRequestFlagAutoCancel  = 1 << 0,
+  UIImageViewRequestFlagAutoReload  = 1 << 1,
+  UIImageViewRequestFlagIsLoaded    = 1 << 2,
+};
 
-static char kBTImageRequestOperationObjectKey;
+static char kBTImageRequestOperationObjectKey = 1;
+static char kBTImageRequestURLObjectKey = 2;
+static char kBTImageRequestFlagObjectKey = 3;
+
 @interface UIImageView (_Network)
-@property (readwrite, nonatomic, retain) BTURLRequestOperation *imageRequestOperation;
+@property (nonatomic, retain) BTURLRequestOperation *imageRequestOperation;
+@property (nonatomic, retain) NSURL *requestURL;
+@property (nonatomic, retain) NSNumber *requestFlags;
+@property (nonatomic) BOOL isLoaded;
+
+//- (BOOL)getBoolValueForFlag:(UIImageViewRequestFlag)flag;
+//- (void)setBoolValue:(BOOL)value forFlag:(UIImageViewRequestFlag)flag;
+
 @end
 
 @implementation UIImageView (_Network)
 @dynamic imageRequestOperation;
+@dynamic requestURL;
+@dynamic requestFlags;
+@dynamic isLoaded;
 @end
 
 @implementation UIImageView (Network)
 
 - (void)dealloc {
   [self cancelImageRequestOperation];
+  self.requestURL = nil;
+  self.requestFlags = nil;
   [super dealloc];
 }
 
@@ -31,6 +52,62 @@ static char kBTImageRequestOperationObjectKey;
 
 - (void)setImageRequestOperation:(BTURLRequestOperation *)imageRequestOperation {
   objc_setAssociatedObject(self, &kBTImageRequestOperationObjectKey, imageRequestOperation,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSURL *)requestURL {
+  return (NSURL *)objc_getAssociatedObject(self, &kBTImageRequestURLObjectKey);
+}
+
+- (void)setRequestURL:(NSURL *)requestURL {
+  objc_setAssociatedObject(self, &kBTImageRequestURLObjectKey, requestURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSNumber *)requestFlags {
+  return (NSNumber*)objc_getAssociatedObject(self, &kBTImageRequestFlagObjectKey);
+}
+
+- (void)setRequestFlags:(NSNumber *)requestFlags {
+  objc_setAssociatedObject(self, &kBTImageRequestFlagObjectKey, requestFlags,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)getBoolValueForFlag:(UIImageViewRequestFlag)flag {
+  NSNumber *flagsObj = (NSNumber*)objc_getAssociatedObject(self, &kBTImageRequestFlagObjectKey);
+  return [flagsObj integerValue]&flag;
+}
+
+- (void)setBoolValue:(BOOL)value forFlag:(UIImageViewRequestFlag)flag {
+  NSNumber *flagsObj = (NSNumber*)objc_getAssociatedObject(self, &kBTImageRequestFlagObjectKey);
+  NSInteger flagsValue = [flagsObj integerValue];
+  if (value) {
+    flagsObj = [NSNumber numberWithInteger:flagsValue|flag];
+  } else {
+    flagsObj = [NSNumber numberWithInteger:(flagsValue&=~flag)];
+  }
+  objc_setAssociatedObject(self, &kBTImageRequestFlagObjectKey, flagsObj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)isAutoCancelRequest {
+  return [self getBoolValueForFlag:UIImageViewRequestFlagAutoCancel];
+}
+
+- (void)setIsAutoCancelRequest:(BOOL)value {
+  [self setBoolValue:value forFlag:UIImageViewRequestFlagAutoCancel];
+}
+
+- (BOOL)isAutoReloadRequest {
+  return [self getBoolValueForFlag:UIImageViewRequestFlagAutoReload];
+}
+
+- (void)setIsAutoReloadRequest:(BOOL)value {
+  [self setBoolValue:value forFlag:UIImageViewRequestFlagAutoReload];
+}
+
+- (BOOL)isLoaded {
+  return [self getBoolValueForFlag:UIImageViewRequestFlagIsLoaded];
+}
+
+- (void)setIsLoaded:(BOOL)value {
+  [self setBoolValue:value forFlag:UIImageViewRequestFlagIsLoaded];
 }
 
 + (NSOperationQueue *)sharedImageRequestOperationQueue {
@@ -44,15 +121,30 @@ static char kBTImageRequestOperationObjectKey;
   return __imageRequestOperationQueue;
 }
 - (void)setImageWithURL:(NSURL *)url {
-  //TODO: check if need cancel
-  self.image = nil;
-  [self cancelImageRequestOperation];
+  if (![self.requestFlags isEqual:url]) {
+    self.requestURL = url;
+    [self cancelImageRequestOperation];
+    self.isLoaded = NO;
+    self.image = nil;
+    
+    [self sendRequestDalayed];
+
+  }
+
+}
+
+- (void)sendRequestDalayed {
+  [self performSelector:@selector(sendRequest) withObject:nil afterDelay:0.25];
+}
+
+- (void)sendRequest {
+  NSURL *url = self.requestURL;
   if ([url isFileURL]) {
     //NSLog(@"isFileURL = YES fileReferenceURL=%@ filePathURL=%@", [url fileReferenceURL],[url filePathURL]);
   }
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//[request setHTTPShouldHandleCookies:NO];
-//[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+  //[request setHTTPShouldHandleCookies:NO];
+  //[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
   BTURLRequestOperation *operation = [[BTURLRequestOperation alloc] initWithRequest:request delegate:self];
   self.imageRequestOperation = operation;
   [[[self class] sharedImageRequestOperationQueue] addOperation:operation];
@@ -60,14 +152,26 @@ static char kBTImageRequestOperationObjectKey;
 }
 
 - (void)cancelImageRequestOperation {
-  [self.imageRequestOperation cancel];
-  [self.imageRequestOperation setDelegate:nil];
-  self.imageRequestOperation = nil;
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  BTURLRequestOperation *operation = self.imageRequestOperation;
+  if (operation) {
+    [operation cancel];
+    [operation setDelegate:nil];
+    self.imageRequestOperation = nil;
+  }
 }
 
 
 - (void)reloadImageRequestIfNeed {
-  
+  if (self.isAutoReloadRequest && self.isLoaded == NO) {
+    [self sendRequestDalayed];
+  }
+}
+
+- (void)cancelImageRequestIfNeed {
+  if (self.isAutoCancelRequest) {
+    [self cancelImageRequestOperation];
+  }
 }
 
 #pragma mark BTURLRequestDelegate
@@ -82,6 +186,7 @@ static char kBTImageRequestOperationObjectKey;
     //self.image = [UIImage imageWithCGImage:[image CGImage] scale:[[UIScreen mainScreen] scale] orientation:image.imageOrientation];
 //    [self setNeedsDisplay];
 //    self.image = [UIImage imageWithCGImage:[image CGImage] scale:[[UIScreen mainScreen] scale] orientation:image.imageOrientation];
+    self.isLoaded = YES;
   }
 }
 - (void)requestFailed:(BTURLRequestOperation *)operation {

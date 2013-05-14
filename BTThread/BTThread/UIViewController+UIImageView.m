@@ -38,7 +38,7 @@
 }
 
 - (void)cancelImageRequestIfNeed {
-  [self findImageViewInParentView:self.view andPerformSelector:@selector(cancelImageRequestOperation)];
+  [self findImageViewInParentView:self.view andPerformSelector:@selector(cancelImageRequestIfNeed)];
 }
 
 - (void)findImageViewInParentView:(UIView*)parentView andPerformSelector:(SEL)selector {

@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BTURLRequestOperation.h"
-typedef NS_OPTIONS(NSUInteger, UIImageViewRequestMode) {
-  UIImageViewRequestModeNone        = 0,
-  UIImageViewRequestModeAutoStop        = 1 << 0,
-  UIImageViewRequestModeAutoReload      = 1 << 1,
-};
+
 @interface UIImageView (Network) <BTURLRequestDelegate>
 - (void)setImageWithURL:(NSURL *)url;
 - (void)cancelImageRequestOperation;
 - (void)reloadImageRequestIfNeed;
+- (void)cancelImageRequestIfNeed;
+//Cancel request when "view will disappear"
+@property(nonatomic) BOOL isAutoCancelRequest;
+
+//Auto send request when "view did appear"
+@property(nonatomic) BOOL isAutoReloadRequest;
 @end
