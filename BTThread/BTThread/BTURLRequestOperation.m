@@ -80,7 +80,6 @@
   NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
   for (NSString *runLoopMode in self.runLoopModes) {
     [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];
-    [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];
   }
   if (_delegate && [_delegate respondsToSelector:@selector(request:didReceiveData:)]) {
     _receiveDataExternally = YES;
@@ -120,6 +119,7 @@
  */
 - (void)connection:(NSURLConnection __unused *)connection didReceiveResponse:(NSURLResponse *)response {
   long long contentLength = [response expectedContentLength];
+  NSLog(@"didReceiveResponse >> th:%@-op:%@ contentLength:%f",[NSThread currentThread],self.name,(contentLength/1024/1024.0));
   self.response = response;
   self.outputStream = [NSOutputStream outputStreamToMemory];
   [self.outputStream open];
@@ -159,7 +159,9 @@
     if ([self.outputStream hasSpaceAvailable]) {
       const uint8_t *dataBuffer = (uint8_t *) [data bytes];
       [self.outputStream write:&dataBuffer[0] maxLength:[data length]];
+      
       dispatch_async(dispatch_get_main_queue(), ^{
+        //NSLog(@"didReceiveData[%@]:%d",self.name, [data length]);
         //TODO:
         //    self.totalBytesRead += [data length];
         //
@@ -185,7 +187,7 @@
 
 - (void)connection:(NSURLConnection __unused *)connection didFailWithError:(NSError *)error {
   self.error = error;
-  NSLog(@"error = %@", error);
+
   [self closeConnection];
   [self markOperationFinish];
   dispatch_async(dispatch_get_main_queue(), ^{

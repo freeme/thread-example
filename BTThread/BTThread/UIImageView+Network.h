@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BTURLRequestOperation.h"
 
+/**
+ TODO: [[UIScreen mainScreen] scale]
+ 
+ */
+
 @interface UIImageView (Network) <BTURLRequestDelegate>
 - (void)setImageWithURL:(NSURL *)url;
 - (void)cancelImageRequestOperation;

@@ -115,20 +115,33 @@ static char kBTImageRequestFlagObjectKey = 3;
   static dispatch_once_t __onceToken;
   dispatch_once(&__onceToken, ^{
     __imageRequestOperationQueue = [[NSOperationQueue alloc] init];
-    [__imageRequestOperationQueue setMaxConcurrentOperationCount:1];
+    [__imageRequestOperationQueue setMaxConcurrentOperationCount:2];
   });
   
   return __imageRequestOperationQueue;
 }
+
++ (NSCache*)sharedMemoryCache {
+  static NSCache *__memoryCache = nil;
+  static dispatch_once_t __onceToken;
+  dispatch_once(&__onceToken, ^{
+    __memoryCache = [[NSCache alloc] init];
+    [__memoryCache setCountLimit:20];
+  });
+  return __memoryCache;
+}
 - (void)setImageWithURL:(NSURL *)url {
-  if (![self.requestFlags isEqual:url]) {
+  if (![self.requestURL isEqual:url]) {
     self.requestURL = url;
     [self cancelImageRequestOperation];
     self.isLoaded = NO;
     self.image = nil;
-    
-    [self sendRequestDalayed];
-
+    UIImage *img = [[[self class] sharedMemoryCache] objectForKey:url];
+    if (img) {
+      self.image = img;
+    } else {
+      [self sendRequestDalayed];
+    }
   }
 
 }
@@ -139,13 +152,24 @@ static char kBTImageRequestFlagObjectKey = 3;
 
 - (void)sendRequest {
   NSURL *url = self.requestURL;
-  if ([url isFileURL]) {
-    //NSLog(@"isFileURL = YES fileReferenceURL=%@ filePathURL=%@", [url fileReferenceURL],[url filePathURL]);
-  }
+
+  static int testNum = 0;
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   //[request setHTTPShouldHandleCookies:NO];
   //[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
   BTURLRequestOperation *operation = [[BTURLRequestOperation alloc] initWithRequest:request delegate:self];
+  if ([url isFileURL]) { //优先加载本地文件
+    //NSLog(@"isFileURL = YES fileReferenceURL=%@ filePathURL=%@", [url fileReferenceURL],[url filePathURL]);
+    //TODO: if it's a local file, send to an other queue? we need to load it first.
+    //Step1: 检查本地有没有
+    //Step2: 有，直接异步加载
+    //Step3: 没有，发网络请求
+    [operation setQueuePriority:NSOperationQueuePriorityHigh];
+  } else {
+    [operation setQueuePriority:NSOperationQueuePriorityNormal];
+  }
+
+  operation.name = [NSString stringWithFormat:@"op%d",testNum++];
   self.imageRequestOperation = operation;
   [[[self class] sharedImageRequestOperationQueue] addOperation:operation];
   [operation release];
@@ -179,10 +203,20 @@ static char kBTImageRequestFlagObjectKey = 3;
   
 }
 - (void)requestFinished:(BTURLRequestOperation *)operation {
-
-  if ([operation.responseData length] > 0) {
+  NSInteger length = [operation.responseData length];
+  if (length > 0) {
+    
     UIImage *image = [UIImage imageWithData:operation.responseData];
     self.image = image;
+    [[[self class] sharedMemoryCache] setObject:image forKey:[operation.request URL] cost:length];
+    
+    self.alpha = 0.3;
+    [UIView beginAnimations:@"" context:NULL];
+    [UIView setAnimationDuration:0.3];
+    //[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    self.alpha = 1.0;
+    
+    [UIView commitAnimations];
     //self.image = [UIImage imageWithCGImage:[image CGImage] scale:[[UIScreen mainScreen] scale] orientation:image.imageOrientation];
 //    [self setNeedsDisplay];
 //    self.image = [UIImage imageWithCGImage:[image CGImage] scale:[[UIScreen mainScreen] scale] orientation:image.imageOrientation];

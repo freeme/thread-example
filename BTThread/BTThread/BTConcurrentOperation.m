@@ -145,11 +145,10 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 }
 
 - (void)start {
-  //NSLog(@"start >> th:%@-op:%@",[NSThread currentThread],self.name);
+  NSLog(@"start >> th:%@-op:%@",[NSThread currentThread],self.name);
   [_lock lock];
   if ([self isCancelled]) {
     [self markOperationFinish];
-    return;
   } else if ([self isReady]) {
     self.state = BTOperationExecutingState;
     [self performSelector:@selector(main) onThread:[[self class] internalThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];
@@ -160,7 +159,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 - (void)main {
   [_lock lock];
   @autoreleasepool {
-    //NSLog(@"main >> th:%@-op:%@",[NSThread currentThread],self.name);
+    NSLog(@"main >> th:%@-op:%@",[NSThread currentThread],self.name);
     if (![self isCancelled]) {
       [self concurrentExecution];
     }
