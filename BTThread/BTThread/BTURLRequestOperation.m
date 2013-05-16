@@ -85,7 +85,7 @@
     _receiveDataExternally = YES;
   }
   [self.connection start];
-  NSLog(@"%@ self.connection start",self);
+  //NSLog(@"%@ self.connection start",self);
 
 }
 
@@ -119,7 +119,7 @@
  */
 - (void)connection:(NSURLConnection __unused *)connection didReceiveResponse:(NSURLResponse *)response {
   long long contentLength = [response expectedContentLength];
-  NSLog(@"didReceiveResponse >> th:%@-op:%@ contentLength:%f",[NSThread currentThread],self.name,(contentLength/1024/1024.0));
+  //NSLog(@"didReceiveResponse >> th:%@-op:%@ contentLength:%f",[NSThread currentThread],self.name,(contentLength/1024/1024.0));
   self.response = response;
   self.outputStream = [NSOutputStream outputStreamToMemory];
   [self.outputStream open];

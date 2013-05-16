@@ -145,7 +145,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 }
 
 - (void)start {
-  NSLog(@"start >> th:%@-op:%@",[NSThread currentThread],self.name);
+  //NSLog(@"start >> th:%@-op:%@",[NSThread currentThread],self.name);
   [_lock lock];
   if ([self isCancelled]) {
     [self markOperationFinish];
@@ -159,7 +159,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
 - (void)main {
   [_lock lock];
   @autoreleasepool {
-    NSLog(@"main >> th:%@-op:%@",[NSThread currentThread],self.name);
+    //NSLog(@"main >> th:%@-op:%@",[NSThread currentThread],self.name);
     if (![self isCancelled]) {
       [self concurrentExecution];
     }
@@ -219,7 +219,7 @@ static inline BOOL BTStateTransitionIsValid(BTOperationState fromState, BTOperat
  Subclass should overwrite this method
  */
 - (void)cancelConcurrentExecution {
-  NSLog(@"cancelConcurrentExecution >> th:%@-op:%@",[NSThread currentThread],self.name);
+  //NSLog(@"cancelConcurrentExecution >> th:%@-op:%@",[NSThread currentThread],self.name);
 }
 
 #pragma mark -

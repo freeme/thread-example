@@ -115,7 +115,7 @@ static char kBTImageRequestFlagObjectKey = 3;
   static dispatch_once_t __onceToken;
   dispatch_once(&__onceToken, ^{
     __imageRequestOperationQueue = [[NSOperationQueue alloc] init];
-    [__imageRequestOperationQueue setMaxConcurrentOperationCount:2];
+    [__imageRequestOperationQueue setMaxConcurrentOperationCount:3];
   });
   
   return __imageRequestOperationQueue;

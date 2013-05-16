@@ -23,12 +23,12 @@
 }
 
 - (void)__replacedViewWillAppear:(BOOL)animated {
-  NSLog(@"replaced %s ",__FUNCTION__);
+  //NSLog(@"replaced %s ",__FUNCTION__);
   [self reloadImageRequestIfNeed];
 }
 
 - (void)__replacedViewWillDisappear:(BOOL)animated {
-  NSLog(@"replaced %s ",__FUNCTION__);
+  //NSLog(@"replaced %s ",__FUNCTION__);
   [self cancelImageRequestIfNeed];
 }
 
