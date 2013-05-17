@@ -7,7 +7,7 @@
 //
 #import <objc/runtime.h>
 #import "UIImageView+Network.h"
-
+#import "BTCache.h"
 typedef NS_OPTIONS(NSUInteger, UIImageViewRequestFlag) {
   UIImageViewRequestFlagNone        = 0,
   UIImageViewRequestFlagAutoCancel  = 1 << 0,
@@ -130,18 +130,39 @@ static char kBTImageRequestFlagObjectKey = 3;
   });
   return __memoryCache;
 }
+
+//+ (BTCache*)sharedCache {
+//  static BTCache *__memoryCache = nil;
+//  static dispatch_once_t __onceToken;
+//  dispatch_once(&__onceToken, ^{
+//    __memoryCache = [[BTCache alloc] init];
+//  });
+//  return __memoryCache;
+//}
+
 - (void)setImageWithURL:(NSURL *)url {
   if (![self.requestURL isEqual:url]) {
     self.requestURL = url;
     [self cancelImageRequestOperation];
     self.isLoaded = NO;
     self.image = nil;
-    UIImage *img = [[[self class] sharedMemoryCache] objectForKey:url];
-    if (img) {
-      self.image = img;
-    } else {
-      [self sendRequestDalayed];
-    }
+//    NSLog(@"absoluteString=%@",[url absoluteString]);
+//    NSLog(@"resourceSpecifier=%@",[url resourceSpecifier]);
+//    UIImage *img = [[[self class] sharedMemoryCache] objectForKey:url];
+//    if (img) {
+//      self.image = img;
+//    } else {
+//      [self sendRequestDalayed];
+//    }
+    [[BTCache sharedCache] imageForURL:url completionBlock:^(UIImage *image, NSURL *url) {
+      if ([self.requestURL isEqual:url]) {
+        if (image) {
+          self.image = image;
+        } else {
+          [self sendRequestDalayed];
+        }
+      }
+    }];
   }
 
 }
@@ -208,7 +229,10 @@ static char kBTImageRequestFlagObjectKey = 3;
     
     UIImage *image = [UIImage imageWithData:operation.responseData];
     self.image = image;
-    [[[self class] sharedMemoryCache] setObject:image forKey:[operation.request URL] cost:length];
+    
+    [[BTCache sharedCache] setImage:image forURL:[operation.request URL]];
+    
+    //[[[self class] sharedMemoryCache] setObject:image forKey:[operation.request URL] cost:length];
     
     self.alpha = 0.3;
     [UIView beginAnimations:@"" context:NULL];

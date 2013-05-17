@@ -20,6 +20,10 @@
 		3FBC2D8717043D5B00F58D7F /* BTThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */; };
 		3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8917044D8A00F58D7F /* BTTask.m */; };
 		3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */; };
+		3FE2AB541745C174004B669C /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB531745C174004B669C /* EGOCache.m */; };
+		3FE2AB5917462DC5004B669C /* BTCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB5817462DC5004B669C /* BTCache.m */; };
+		3FE2AB6117464624004B669C /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB6017464624004B669C /* NSStringAdditions.m */; };
+		3FE2AB64174647D8004B669C /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB63174647D8004B669C /* NSDataAdditions.m */; };
 		4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */; };
 		4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */; };
 		4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E53086217312AAE00607C47 /* BTURLRequestOperation.m */; };
@@ -58,6 +62,14 @@
 		3FBC2D8917044D8A00F58D7F /* BTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTask.m; sourceTree = "<group>"; };
 		3FBC2D8B1704508700F58D7F /* BTThreadPoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTThreadPoolViewController.h; sourceTree = "<group>"; };
 		3FBC2D8C1704508700F58D7F /* BTThreadPoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTThreadPoolViewController.m; sourceTree = "<group>"; };
+		3FE2AB521745C174004B669C /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
+		3FE2AB531745C174004B669C /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
+		3FE2AB5717462DC5004B669C /* BTCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTCache.h; sourceTree = "<group>"; };
+		3FE2AB5817462DC5004B669C /* BTCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTCache.m; sourceTree = "<group>"; };
+		3FE2AB5F17464624004B669C /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
+		3FE2AB6017464624004B669C /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
+		3FE2AB62174647D8004B669C /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
+		3FE2AB63174647D8004B669C /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
 		4E050E611737F5BF00B4FAE4 /* UIViewController+UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UIImageView.h"; sourceTree = "<group>"; };
 		4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UIImageView.m"; sourceTree = "<group>"; };
 		4E43A1161716B45A00F7AD38 /* BTLockThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLockThreadPool.h; sourceTree = "<group>"; };
@@ -125,6 +137,11 @@
 		3FBC2D6B170439E400F58D7F /* BTThread */ = {
 			isa = PBXGroup;
 			children = (
+				3FE2AB62174647D8004B669C /* NSDataAdditions.h */,
+				3FE2AB63174647D8004B669C /* NSDataAdditions.m */,
+				3FE2AB5F17464624004B669C /* NSStringAdditions.h */,
+				3FE2AB6017464624004B669C /* NSStringAdditions.m */,
+				3FE2AB561745C191004B669C /* Cache */,
 				3FBC2D8217043A1B00F58D7F /* BTRootViewController.h */,
 				3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */,
 				4E4744611711C6A0000AF9AD /* Operation */,
@@ -155,6 +172,17 @@
 				3FBC2D7B170439E400F58D7F /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3FE2AB561745C191004B669C /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				3FE2AB521745C174004B669C /* EGOCache.h */,
+				3FE2AB531745C174004B669C /* EGOCache.m */,
+				3FE2AB5717462DC5004B669C /* BTCache.h */,
+				3FE2AB5817462DC5004B669C /* BTCache.m */,
+			);
+			name = Cache;
 			sourceTree = "<group>";
 		};
 		4E4744601711C68A000AF9AD /* Thread */ = {
@@ -277,6 +305,10 @@
 				4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */,
 				4E657EF91737E7F600A46AAF /* UIImageView+Network.m in Sources */,
 				4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */,
+				3FE2AB541745C174004B669C /* EGOCache.m in Sources */,
+				3FE2AB5917462DC5004B669C /* BTCache.m in Sources */,
+				3FE2AB6117464624004B669C /* NSStringAdditions.m in Sources */,
+				3FE2AB64174647D8004B669C /* NSDataAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
