@@ -39,6 +39,17 @@ static char kBTImageRequestFlagObjectKey = 3;
 
 @implementation UIImageView (Network)
 
+
+//+ (void)initialize {
+//  Class klass = [UIView class];
+//  method_exchangeImplementations(class_getInstanceMethod(klass,@selector(drawRect:)),class_getInstanceMethod(klass, @selector(__drawRect:)));
+////  method_exchangeImplementations(class_getInstanceMethod(klass,@selector(viewWillDisappear:)),class_getInstanceMethod(klass, @selector(__replacedViewWillDisappear:)));
+//}
+
+- (void)__drawRect:(CGRect)rect {
+  NSLog(@"__drawRect");
+}
+
 - (void)dealloc {
   [self cancelImageRequestOperation];
   self.requestURL = nil;

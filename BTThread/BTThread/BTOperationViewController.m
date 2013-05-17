@@ -9,7 +9,7 @@
 #import "BTOperationViewController.h"
 #import "BTConcurrentOperation.h"
 #import "UIImageView+Network.h"
-
+#import "BTCache.h"
 @interface BTOperationViewController ()
 
 @end
@@ -49,7 +49,16 @@
   
   // Uncomment the following line to preserve selection between presentations.
   self.clearsSelectionOnViewWillAppear = YES;
-  
+  self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(clearAndRest)] autorelease];
+}
+
+- (void)clearAndRest {
+  [[BTCache sharedCache] clearAll];
+  for (NSDictionary *userDict in _users) {
+    NSURL *url = [NSURL URLWithString:[userDict valueForKeyPath:@"cover_image.url"]];
+    NSLog(@"url:%@",url);
+    [[BTCache sharedCache] imageForURL:url completionBlock:NULL];
+  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,11 +104,13 @@
   }
   cell.textLabel.text = [[_users objectAtIndex:indexPath.row] valueForKeyPath:@"username"];
   {
-    UIImageView *imageView = (UIImageView*)[cell viewWithTag:100];
-    [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"avatar_image.url"]]];
+//    UIImageView *imageView = (UIImageView*)[cell viewWithTag:100];
+//    [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"avatar_image.url"]]];
   }
   {
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:200];
+//imageView.clipsToBounds = YES;
+//imageView.contentMode = UIViewContentModeTopLeft;
     [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"cover_image.url"]]];
   }
   return cell;

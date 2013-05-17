@@ -21,4 +21,5 @@
 - (void) imageForURL:(NSURL*)url completionBlock:(void (^)(UIImage *image, NSURL *url))completion;
 - (void) imageForKey:(NSString*)key completionBlock:(void (^)(UIImage *image, NSString *key))completion;
 - (void)setImage:(UIImage*)image forURL:(NSURL*)url;
+- (void)clearAll;
 @end

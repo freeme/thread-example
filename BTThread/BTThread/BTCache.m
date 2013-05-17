@@ -35,7 +35,7 @@ inline static NSString *keyForURL(NSURL *url) {
   if (self) {
     _memoryCache = [[NSCache alloc] init];
     [_memoryCache setName:@"BTCache-Memory"];
-    [_memoryCache setCountLimit:10];
+    [_memoryCache setCountLimit:100];
     
     _diskOperationQueue = [[NSOperationQueue alloc] init];
     [_diskOperationQueue setMaxConcurrentOperationCount:1];
@@ -46,6 +46,8 @@ inline static NSString *keyForURL(NSURL *url) {
     _defaultManager = [[NSFileManager defaultManager] retain];
     NSString* sysCachesDirectory = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     _cachesDirectory = [[[sysCachesDirectory stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]] stringByAppendingPathComponent:@"BTCache"] copy];
+    NSLog(@"_cachesDirectory:%@",_cachesDirectory);
+    [_defaultManager createDirectoryAtPath:_cachesDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
   }
   return self;
 }
@@ -56,18 +58,19 @@ inline static NSString *keyForURL(NSURL *url) {
 
 - (void) imageForURL:(NSURL*)url completionBlock:(void (^)(UIImage *image, NSURL *url))completion {
   NSString* key = [[url absoluteString] sha1Hash];
-  __block UIImage *img = [_memoryCache objectForKey:key];
+  __block UIImage *img = [[_memoryCache objectForKey:key] retain];
   if (img) {
     if(completion) {
       completion(img,url);
+      [img release];
     }
   } else {
     NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
     NSBlockOperation *readExistInDisk = [NSBlockOperation blockOperationWithBlock:^{
-      BOOL exist = [_defaultManager fileExistsAtPath:[self filePathForKey:key]];
+      BOOL exist = YES;//[_defaultManager fileExistsAtPath:[self filePathForKey:key]];
       if (exist) {
         @try {
-          img = [NSKeyedUnarchiver unarchiveObjectWithFile:[self filePathForKey:key]];
+          img = [[NSKeyedUnarchiver unarchiveObjectWithFile:[self filePathForKey:key]] retain];
         } @catch (NSException* e) {
           // Surpress any unarchiving exceptions and continue with nil
         }
@@ -78,6 +81,7 @@ inline static NSString *keyForURL(NSURL *url) {
       if(completion) {
         [mainQueue addOperationWithBlock:^{
           completion(img,url);
+          [img release];
         }];
       }
     }];
@@ -122,12 +126,16 @@ inline static NSString *keyForURL(NSURL *url) {
    NSString* key = [[url absoluteString] sha1Hash];
   [_memoryCache setObject:image forKey:key cost:(image.size.width*image.size.height*image.scale)];
   NSBlockOperation *writeToDisk = [NSBlockOperation blockOperationWithBlock:^{
-    @try {
-      NSData *data = [NSKeyedArchiver archivedDataWithRootObject:image];
-      [data writeToFile:[self filePathForKey:key] atomically:YES];
-    } @catch (NSException* e) {
-      // Something went wrong, but we'll fail silently.
+    BOOL exist = [_defaultManager fileExistsAtPath:[self filePathForKey:key]];
+    if (!exist) {
+      @try {
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:image];
+        [data writeToFile:[self filePathForKey:key] atomically:YES];
+      } @catch (NSException* e) {
+        // Something went wrong, but we'll fail silently.
+      }
     }
+    
   }];
   [writeToDisk setQueuePriority:NSOperationQueuePriorityLow];
   [_diskOperationQueue addOperation:writeToDisk];
@@ -146,6 +154,10 @@ inline static NSString *keyForURL(NSURL *url) {
   }];
   [writeToDisk setQueuePriority:NSOperationQueuePriorityLow];
   [_diskOperationQueue addOperation:writeToDisk];
+}
+
+- (void)clearAll {
+  [_memoryCache removeAllObjects];
 }
 
 
