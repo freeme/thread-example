@@ -25,6 +25,7 @@
 		3FE2AB6117464624004B669C /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB6017464624004B669C /* NSStringAdditions.m */; };
 		3FE2AB64174647D8004B669C /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB63174647D8004B669C /* NSDataAdditions.m */; };
 		4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */; };
+		4E339223174725EE00DAD93D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E339222174725EE00DAD93D /* CoreImage.framework */; };
 		4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */; };
 		4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E53086217312AAE00607C47 /* BTURLRequestOperation.m */; };
 		4E657EF91737E7F600A46AAF /* UIImageView+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E657EF81737E7F600A46AAF /* UIImageView+Network.m */; };
@@ -72,6 +73,7 @@
 		3FE2AB63174647D8004B669C /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
 		4E050E611737F5BF00B4FAE4 /* UIViewController+UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UIImageView.h"; sourceTree = "<group>"; };
 		4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UIImageView.m"; sourceTree = "<group>"; };
+		4E339222174725EE00DAD93D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		4E43A1161716B45A00F7AD38 /* BTLockThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLockThreadPool.h; sourceTree = "<group>"; };
 		4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLockThreadPool.m; sourceTree = "<group>"; };
 		4E4744621711C6B4000AF9AD /* BTConcurrentOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTConcurrentOperation.h; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E339223174725EE00DAD93D /* CoreImage.framework in Frameworks */,
 				3FBC2D66170439E400F58D7F /* UIKit.framework in Frameworks */,
 				3FBC2D68170439E400F58D7F /* Foundation.framework in Frameworks */,
 				3FBC2D6A170439E400F58D7F /* CoreGraphics.framework in Frameworks */,
@@ -127,6 +130,7 @@
 		3FBC2D64170439E400F58D7F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4E339222174725EE00DAD93D /* CoreImage.framework */,
 				3FBC2D65170439E400F58D7F /* UIKit.framework */,
 				3FBC2D67170439E400F58D7F /* Foundation.framework */,
 				3FBC2D69170439E400F58D7F /* CoreGraphics.framework */,
@@ -142,8 +146,8 @@
 				3FE2AB5F17464624004B669C /* NSStringAdditions.h */,
 				3FE2AB6017464624004B669C /* NSStringAdditions.m */,
 				3FE2AB561745C191004B669C /* Cache */,
-				3FBC2D8217043A1B00F58D7F /* BTRootViewController.h */,
 				3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */,
+				3FBC2D8217043A1B00F58D7F /* BTRootViewController.h */,
 				4E4744611711C6A0000AF9AD /* Operation */,
 				4E4744601711C68A000AF9AD /* Thread */,
 				3FBC2D74170439E400F58D7F /* BTAppDelegate.h */,

@@ -17,6 +17,16 @@ inline static NSString *keyForURL(NSURL *url) {
 	return [url absoluteString];
 }
 
+@interface BTIOBlockOperation : NSBlockOperation
+@property(nonatomic,copy) NSString* key;
+@end
+
+@implementation BTIOBlockOperation
+
+
+
+@end
+
 
 @implementation BTCache
 + (id)sharedCache {
@@ -35,7 +45,7 @@ inline static NSString *keyForURL(NSURL *url) {
   if (self) {
     _memoryCache = [[NSCache alloc] init];
     [_memoryCache setName:@"BTCache-Memory"];
-    [_memoryCache setCountLimit:100];
+    [_memoryCache setCountLimit:1];
     
     _diskOperationQueue = [[NSOperationQueue alloc] init];
     [_diskOperationQueue setMaxConcurrentOperationCount:1];
@@ -66,17 +76,28 @@ inline static NSString *keyForURL(NSURL *url) {
     }
   } else {
     NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
-    NSBlockOperation *readExistInDisk = [NSBlockOperation blockOperationWithBlock:^{
-      BOOL exist = YES;//[_defaultManager fileExistsAtPath:[self filePathForKey:key]];
-      if (exist) {
-        @try {
-          img = [[NSKeyedUnarchiver unarchiveObjectWithFile:[self filePathForKey:key]] retain];
-        } @catch (NSException* e) {
-          // Surpress any unarchiving exceptions and continue with nil
+    BTIOBlockOperation *readExistInDisk = [BTIOBlockOperation blockOperationWithBlock:^{
+      NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+      NSLog(@"readExistInDisk.key = %@", key);
+      img = [[_memoryCache objectForKey:key] retain];
+      if (!img) {
+        BOOL exist = [_defaultManager fileExistsAtPath:[self filePathForKey:key]];
+        if (exist) {
+          @try {
+            img = [[NSKeyedUnarchiver unarchiveObjectWithFile:[self filePathForKey:key]] retain];
+          } @catch (NSException* e) {
+            // Surpress any unarchiving exceptions and continue with nil
+          }
         }
       }
+      
       if (img) {
         [_memoryCache setObject:img forKey:key cost:(img.size.width*img.size.height*img.scale)];
+//        UIGraphicsBeginImageContext(CGSizeMake(44, 44));
+//        [img drawInRect:CGRectMake(0, 0, 44, 44)];
+//        UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        [smallImage retain];
       }
       if(completion) {
         [mainQueue addOperationWithBlock:^{
@@ -84,43 +105,25 @@ inline static NSString *keyForURL(NSURL *url) {
           [img release];
         }];
       }
+
+    
+//      UIImage *smallImage = nil;
+//      if(completion) {
+//        [mainQueue addOperationWithBlock:^{
+//          completion(smallImage,url);
+//          [smallImage release];
+//          [img release];
+//        }];
+//      }
+      [pool release];
     }];
     [readExistInDisk setQueuePriority:NSOperationQueuePriorityNormal];
+    readExistInDisk.key = key;
     [_diskOperationQueue addOperation:readExistInDisk];
   }
 
 }
 
-- (void) imageForKey:(NSString*)key completionBlock:(void (^)(UIImage *image, NSString*key))completion {
-  __block UIImage *img = [_memoryCache objectForKey:key];
-  if (img) {
-    if(completion) {
-      completion(img,key);
-    }
-  } else {
-    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
-    NSBlockOperation *readExistInDisk = [NSBlockOperation blockOperationWithBlock:^{
-      BOOL exist = [_defaultManager fileExistsAtPath:[self filePathForKey:key]];
-      if (exist) {
-        @try {
-          img = [NSKeyedUnarchiver unarchiveObjectWithFile:[self filePathForKey:key]];
-        } @catch (NSException* e) {
-          // Surpress any unarchiving exceptions and continue with nil
-        }
-      }
-      if (img) {
-        [_memoryCache setObject:img forKey:key cost:(img.size.width*img.size.height*img.scale)];
-        if(completion) {
-          [mainQueue addOperationWithBlock:^{
-            completion(img,key);
-          }];
-        }
-      }
-    }];
-    [readExistInDisk setQueuePriority:NSOperationQueuePriorityNormal];
-    [_diskOperationQueue addOperation:readExistInDisk];
-  }
-}
 
 - (void)setImage:(UIImage*)image forURL:(NSURL*)url {
    NSString* key = [[url absoluteString] sha1Hash];
@@ -141,19 +144,20 @@ inline static NSString *keyForURL(NSURL *url) {
   [_diskOperationQueue addOperation:writeToDisk];
 }
 
-- (void)setImage:(UIImage*)image forKey:(NSString*)key {
-  //use the image size and scale for the cost simply
-  [_memoryCache setObject:image forKey:key cost:(image.size.width*image.size.height*image.scale)];
-  NSBlockOperation *writeToDisk = [NSBlockOperation blockOperationWithBlock:^{
-    @try {
-      NSData *data = [NSKeyedArchiver archivedDataWithRootObject:image];
-      [data writeToFile:[self filePathForKey:key] atomically:YES];
-    } @catch (NSException* e) {
-      // Something went wrong, but we'll fail silently.
+- (void)cancelImageForURL:(NSURL*)url {
+  NSString* key = [[url absoluteString] sha1Hash];
+  NSArray *ops = [[_diskOperationQueue operations] copy];
+  for (NSBlockOperation *op in ops) {
+    if ([op isKindOfClass:[BTIOBlockOperation class]]) {
+      if ([((BTIOBlockOperation*)op).key isEqualToString:key]) {
+        [op cancel];
+        NSLog(@"--------------");
+        break;
+        
+      }
     }
-  }];
-  [writeToDisk setQueuePriority:NSOperationQueuePriorityLow];
-  [_diskOperationQueue addOperation:writeToDisk];
+  }
+  [ops release];
 }
 
 - (void)clearAll {

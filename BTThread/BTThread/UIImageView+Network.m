@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 He baochen. All rights reserved.
 //
 #import <objc/runtime.h>
+#import <CoreImage/CoreImage.h>
 #import "UIImageView+Network.h"
 #import "BTCache.h"
 typedef NS_OPTIONS(NSUInteger, UIImageViewRequestFlag) {
@@ -153,8 +154,10 @@ static char kBTImageRequestFlagObjectKey = 3;
 
 - (void)setImageWithURL:(NSURL *)url {
   if (![self.requestURL isEqual:url]) {
-    self.requestURL = url;
+    [[BTCache sharedCache] cancelImageForURL:self.requestURL];
     [self cancelImageRequestOperation];
+    self.requestURL = url;
+    
     self.isLoaded = NO;
     self.image = nil;
 //    NSLog(@"absoluteString=%@",[url absoluteString]);
@@ -165,6 +168,8 @@ static char kBTImageRequestFlagObjectKey = 3;
 //    } else {
 //      [self sendRequestDalayed];
 //    }
+//    [self sendRequestDalayed];
+    
     [[BTCache sharedCache] imageForURL:url completionBlock:^(UIImage *image, NSURL *url) {
       if ([self.requestURL isEqual:url]) {
         if (image) {
@@ -239,8 +244,15 @@ static char kBTImageRequestFlagObjectKey = 3;
   if (length > 0) {
     
     UIImage *image = [UIImage imageWithData:operation.responseData];
-    self.image = image;
+//    self.image = image;
+//
     
+//    CIContext *context = [CIContext contextWithOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey: kCIContextUseSoftwareRenderer]];
+//    CIImage *ciImage = [CIImage imageWithData:operation.responseData];
+//    CGImageRef cgImage = [context createCGImage:ciImage fromRect:[ciImage extent]];
+//    //UIImage *image = [UIImage imageWithCIImage:ciImage];
+//    UIImage *image = [UIImage imageWithCGImage:cgImage];
+    self.image = image;
     [[BTCache sharedCache] setImage:image forURL:[operation.request URL]];
     
     //[[[self class] sharedMemoryCache] setObject:image forKey:[operation.request URL] cost:length];

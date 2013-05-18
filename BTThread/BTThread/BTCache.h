@@ -18,8 +18,8 @@
 
 + (id)sharedCache;
 
-- (void) imageForURL:(NSURL*)url completionBlock:(void (^)(UIImage *image, NSURL *url))completion;
-- (void) imageForKey:(NSString*)key completionBlock:(void (^)(UIImage *image, NSString *key))completion;
+- (void)imageForURL:(NSURL*)url completionBlock:(void (^)(UIImage *image, NSURL *url))completion;
 - (void)setImage:(UIImage*)image forURL:(NSURL*)url;
+- (void)cancelImageForURL:(NSURL*)url;
 - (void)clearAll;
 @end

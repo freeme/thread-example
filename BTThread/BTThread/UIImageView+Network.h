@@ -11,7 +11,7 @@
 
 /**
  TODO: [[UIScreen mainScreen] scale]
- 
+ TODO: 在无内存缓存的情况，小图的流畅性要比大图好，需要测试一下到底是IO影响了流畅性，还是大图绘制，将大图在从IO读出转成小图试试
  */
 
 @interface UIImageView (Network) <BTURLRequestDelegate>

@@ -109,8 +109,6 @@
   }
   {
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:200];
-//imageView.clipsToBounds = YES;
-//imageView.contentMode = UIViewContentModeTopLeft;
     [imageView setImageWithURL:[NSURL URLWithString:[[_users objectAtIndex:indexPath.row] valueForKeyPath:@"cover_image.url"]]];
   }
   return cell;
