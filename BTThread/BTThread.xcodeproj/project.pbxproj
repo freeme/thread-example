@@ -24,7 +24,6 @@
 		3FE2AB5917462DC5004B669C /* BTCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB5817462DC5004B669C /* BTCache.m */; };
 		3FE2AB6117464624004B669C /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB6017464624004B669C /* NSStringAdditions.m */; };
 		3FE2AB64174647D8004B669C /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2AB63174647D8004B669C /* NSDataAdditions.m */; };
-		4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */; };
 		4E339223174725EE00DAD93D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E339222174725EE00DAD93D /* CoreImage.framework */; };
 		4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */; };
 		4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E53086217312AAE00607C47 /* BTURLRequestOperation.m */; };
@@ -32,11 +31,11 @@
 		4E70D8DB17395D5C008F0875 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E70D8DA17395D5C008F0875 /* icon.png */; };
 		4E70D8DD17395F06008F0875 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E70D8DC17395F06008F0875 /* icon2.png */; };
 		4E70D8DF17395F49008F0875 /* icon2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E70D8DE17395F49008F0875 /* icon2x2.png */; };
-		4E7B23E91712E90100551006 /* BTRunLoopThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */; };
 		4E8707AE173AA1730061E6F7 /* global3.json in Resources */ = {isa = PBXBuildFile; fileRef = 4E8707AA173AA1730061E6F7 /* global3.json */; };
 		4E8707AF173AA1730061E6F7 /* global2.json in Resources */ = {isa = PBXBuildFile; fileRef = 4E8707AB173AA1730061E6F7 /* global2.json */; };
 		4E8707B0173AA1730061E6F7 /* global1.json in Resources */ = {isa = PBXBuildFile; fileRef = 4E8707AC173AA1730061E6F7 /* global1.json */; };
 		4E8707B1173AA1730061E6F7 /* global0.json in Resources */ = {isa = PBXBuildFile; fileRef = 4E8707AD173AA1730061E6F7 /* global0.json */; };
+		4ED64D741779A44800F85E33 /* BTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ED64D731779A44800F85E33 /* BTTestViewController.m */; };
 		4EFA75DF172FFD5E002FC5F1 /* BTConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4744631711C6B4000AF9AD /* BTConcurrentOperation.m */; };
 		4EFA75E2172FFF63002FC5F1 /* BTOperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */; };
 /* End PBXBuildFile section */
@@ -71,8 +70,6 @@
 		3FE2AB6017464624004B669C /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
 		3FE2AB62174647D8004B669C /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
 		3FE2AB63174647D8004B669C /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
-		4E050E611737F5BF00B4FAE4 /* UIViewController+UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UIImageView.h"; sourceTree = "<group>"; };
-		4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UIImageView.m"; sourceTree = "<group>"; };
 		4E339222174725EE00DAD93D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		4E43A1161716B45A00F7AD38 /* BTLockThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLockThreadPool.h; sourceTree = "<group>"; };
 		4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLockThreadPool.m; sourceTree = "<group>"; };
@@ -85,12 +82,12 @@
 		4E70D8DA17395D5C008F0875 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		4E70D8DC17395F06008F0875 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		4E70D8DE17395F49008F0875 /* icon2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2x2.png; sourceTree = "<group>"; };
-		4E7B23E71712E90100551006 /* BTRunLoopThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRunLoopThreadPool.h; sourceTree = "<group>"; };
-		4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRunLoopThreadPool.m; sourceTree = "<group>"; };
 		4E8707AA173AA1730061E6F7 /* global3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global3.json; sourceTree = "<group>"; };
 		4E8707AB173AA1730061E6F7 /* global2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global2.json; sourceTree = "<group>"; };
 		4E8707AC173AA1730061E6F7 /* global1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global1.json; sourceTree = "<group>"; };
 		4E8707AD173AA1730061E6F7 /* global0.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global0.json; sourceTree = "<group>"; };
+		4ED64D721779A44800F85E33 /* BTTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BTTestViewController.h; path = ../BTTestViewController.h; sourceTree = "<group>"; };
+		4ED64D731779A44800F85E33 /* BTTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BTTestViewController.m; path = ../BTTestViewController.m; sourceTree = "<group>"; };
 		4EFA75E0172FFF63002FC5F1 /* BTOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTOperationViewController.h; sourceTree = "<group>"; };
 		4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTOperationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,8 +143,10 @@
 				3FE2AB5F17464624004B669C /* NSStringAdditions.h */,
 				3FE2AB6017464624004B669C /* NSStringAdditions.m */,
 				3FE2AB561745C191004B669C /* Cache */,
-				3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */,
 				3FBC2D8217043A1B00F58D7F /* BTRootViewController.h */,
+				3FBC2D8317043A1B00F58D7F /* BTRootViewController.m */,
+				4ED64D721779A44800F85E33 /* BTTestViewController.h */,
+				4ED64D731779A44800F85E33 /* BTTestViewController.m */,
 				4E4744611711C6A0000AF9AD /* Operation */,
 				4E4744601711C68A000AF9AD /* Thread */,
 				3FBC2D74170439E400F58D7F /* BTAppDelegate.h */,
@@ -198,8 +197,6 @@
 				3FBC2D8617043D5B00F58D7F /* BTThreadPool.m */,
 				4E43A1161716B45A00F7AD38 /* BTLockThreadPool.h */,
 				4E43A1171716B45A00F7AD38 /* BTLockThreadPool.m */,
-				4E7B23E71712E90100551006 /* BTRunLoopThreadPool.h */,
-				4E7B23E81712E90100551006 /* BTRunLoopThreadPool.m */,
 				3FBC2D8817044D8A00F58D7F /* BTTask.h */,
 				3FBC2D8917044D8A00F58D7F /* BTTask.m */,
 			);
@@ -217,8 +214,6 @@
 				4EFA75E1172FFF63002FC5F1 /* BTOperationViewController.m */,
 				4E657EF71737E7F600A46AAF /* UIImageView+Network.h */,
 				4E657EF81737E7F600A46AAF /* UIImageView+Network.m */,
-				4E050E611737F5BF00B4FAE4 /* UIViewController+UIImageView.h */,
-				4E050E621737F5BF00B4FAE4 /* UIViewController+UIImageView.m */,
 			);
 			name = Operation;
 			sourceTree = "<group>";
@@ -303,16 +298,15 @@
 				3FBC2D8717043D5B00F58D7F /* BTThreadPool.m in Sources */,
 				3FBC2D8A17044D8A00F58D7F /* BTTask.m in Sources */,
 				3FBC2D8D1704508700F58D7F /* BTThreadPoolViewController.m in Sources */,
-				4E7B23E91712E90100551006 /* BTRunLoopThreadPool.m in Sources */,
 				4E43A1181716B45A00F7AD38 /* BTLockThreadPool.m in Sources */,
 				4EFA75E2172FFF63002FC5F1 /* BTOperationViewController.m in Sources */,
 				4E53086317312AAE00607C47 /* BTURLRequestOperation.m in Sources */,
 				4E657EF91737E7F600A46AAF /* UIImageView+Network.m in Sources */,
-				4E050E631737F5BF00B4FAE4 /* UIViewController+UIImageView.m in Sources */,
 				3FE2AB541745C174004B669C /* EGOCache.m in Sources */,
 				3FE2AB5917462DC5004B669C /* BTCache.m in Sources */,
 				3FE2AB6117464624004B669C /* NSStringAdditions.m in Sources */,
 				3FE2AB64174647D8004B669C /* NSDataAdditions.m in Sources */,
+				4ED64D741779A44800F85E33 /* BTTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,9 +374,14 @@
 		3FBC2D80170439E400F58D7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BTThread/BTThread-Prefix.pch";
 				INFOPLIST_FILE = "BTThread/BTThread-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -392,9 +391,14 @@
 		3FBC2D81170439E400F58D7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BTThread/BTThread-Prefix.pch";
 				INFOPLIST_FILE = "BTThread/BTThread-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

@@ -8,6 +8,7 @@
 
 #import "BTAppDelegate.h"
 #import "BTRootViewController.h"
+#import <libkern/OSAtomic.h>
 
 @implementation BTAppDelegate
 
@@ -29,6 +30,7 @@
   [self.window addSubview:_navController.view];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
     return YES;
 }
 

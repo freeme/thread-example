@@ -8,26 +8,26 @@
 
 #import "BTThreadPool.h"
 
-@interface BTThread: NSThread {
-  CFRunLoopSourceRef _runLoopSource;
-  CFRunLoopRef _runLoop;
-}
-@property(nonatomic,assign) CFRunLoopSourceRef runLoopSource;
-@property(nonatomic,assign) CFRunLoopRef runLoop;
-@property(nonatomic,assign) id target;
-@property(nonatomic) SEL selector;
+//@interface BTThread: NSThread {
+//  CFRunLoopSourceRef _runLoopSource;
+//  CFRunLoopRef _runLoop;
+//}
+//@property(nonatomic,assign) CFRunLoopSourceRef runLoopSource;
+//@property(nonatomic,assign) CFRunLoopRef runLoop;
+//@property(nonatomic,assign) id target;
+//@property(nonatomic) SEL selector;
+//
+//@end
 
-@end
-
-@implementation BTThread
-
-- (void) main {
-  if (_target) {
-    [_target performSelector:_selector];
-  }
-}
-
-@end
+//@implementation BTThread
+//
+//- (void) main {
+//  if (_target) {
+//    [_target performSelector:_selector];
+//  }
+//}
+//
+//@end
 
 @interface BTThreadPool()
 
@@ -65,9 +65,7 @@
 }
 
 - (void) cancelThreads {
-  for (BTThread *thread in _threadsArray) {
-    thread.target = nil;
-    thread.selector = nil;
+  for (NSThread *thread in _threadsArray) {
     [thread cancel];
   }
 }
@@ -100,6 +98,7 @@
 
 //TODO: 这个Main方法的实现存在的问题是？
 - (void)main {
+  
   NSThread *curThread = [NSThread currentThread];
   while (![curThread isCancelled]) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

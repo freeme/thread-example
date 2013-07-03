@@ -11,8 +11,8 @@
 #import "BTOperationViewController.h"
 #import "BTThreadPool.h"
 #import "BTLockThreadPool.h"
-#import "BTRunLoopThreadPool.h"
 #import "UIImageView+Network.h"
+#import "BTTestViewController.h"
 
 @interface BTRootViewController ()
 
@@ -32,7 +32,7 @@
     if (self) {
         // Custom initialization
       self.title = @"BTThread Example";
-      _threadExamples = [[NSArray alloc] initWithObjects:@"BTThreadPool",@"BTLockThreadPool",@"BTRunLoopThreadPool", nil];
+      _threadExamples = [[NSArray alloc] initWithObjects:@"BTThreadPool",@"BTLockThreadPool", nil];
     }
     return self;
 }
@@ -59,16 +59,17 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-  if (section == 0) {
-    return [_threadExamples count];
-  } else {
+  if (section == 0||section == 1) {
     return 1;
+
+  } else {
+    return [_threadExamples count];
   }
     
 }
@@ -82,9 +83,11 @@
   }
     // Configure the cell...
   if (indexPath.section == 0) {
-      cell.textLabel.text = [_threadExamples objectAtIndex:indexPath.row];
-  } else {
+    cell.textLabel.text = @"Test View";
+  } else if (indexPath.section == 1) {
     cell.textLabel.text = @"Concurrent Operation";
+  } else {
+     cell.textLabel.text = [_threadExamples objectAtIndex:indexPath.row];
   }
     return cell;
 }
@@ -133,6 +136,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   if (indexPath.section == 0) {
+    BTTestViewController *controller = [[BTTestViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+    
+  }  else if (indexPath.section == 1) {
+    BTOperationViewController *controller = [[BTOperationViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+  } else if (indexPath.section == 2) {
+//    BTOperationViewController *viewController = [[BTOperationViewController alloc] initWithStyle:UITableViewStylePlain];
+//    [self.navigationController pushViewController:viewController animated:YES];
+//    [viewController release];
     id<BTThreadPool> threadPool = nil;
     NSString *className = [_threadExamples objectAtIndex:indexPath.row];
     Class cls = NSClassFromString(className);
@@ -141,10 +156,6 @@
     [threadPool release];
     [self.navigationController pushViewController:poolController animated:YES];
     [poolController release];
-  } else if (indexPath.section == 1) {
-    BTOperationViewController *viewController = [[BTOperationViewController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:viewController animated:YES];
-    [viewController release];
   }
 
 }
